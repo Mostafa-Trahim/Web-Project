@@ -11,7 +11,7 @@
     <div class="Main">
         <div class='Header'>
                 <div class='Header-left'>
-                    <img src="./img/logo1.png" alt="logo" />
+                    <a href="/"><img src="./img/logo1.png" alt="logo" /></a>
                     <nav class='Navbar'>
                         <ul>
                             <li>🔀 Shuffle</li>
@@ -20,9 +20,9 @@
                         </ul>
                     </nav>
 
-                    <div class='Header-search'>
+                    <div class='Header-search' >
                         <span>🔍</span>
-                        <input type="text" placeholder="Search MemesHub" />
+                        <input type="text" placeholder="Search MemesHub" style="color: white;" />
                     </div>
 
                 </div>
@@ -30,9 +30,8 @@
                 <div class='Header-right'>
 
                     <div class='Header-icons'>
-                        <button class="btn btn-outline-primary me-2">Login</button>
-                        <button class="btn btn-primary">Sign Up</button>
-                        <FaUserCircle class='User-icon'/>
+                        <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</button>
                         <button class='btn btn-warning text-white'>
                             <span>Post</span>
                         </button>
@@ -70,12 +69,78 @@
               </div>
         </div> -->
         
+        <!-- Register Modal -->
+        <div class="modal fade" id="RegisterModal" tabindex="-1" aria-labelledby="RegisterModalLabel" aria-hidden="true" style="color: white;">
+            <div class="modal-dialog text-center" style="background-color: #141414;">
+                <div class="modal-content" style="background-color: #141414;">
+                    <div class="pt-16 pb-32">
+                        <div class="container w-100 m-auto ">
+                            <div class="mw-md mx-auto text-center">
+                              <a class="d-inline-block mb-24" href="/">
+                                <img src="./img/logo1.png" alt="" >
+                              </a>
+                              <h3 class="mb-4">Join for free</h3>
+                              <form action="" data-bitwarden-watching="1">
+                                <div class="mb-4">
+                                  <input class="form-control " type="text" placeholder="First & Last Name">
+                                </div>
+                                <div class="mb-4">
+                                  <input class="form-control" type="email" placeholder="Email address">
+                                </div>
+                                <div class="mb-5">
+                                  <input class="form-control" type="password" placeholder="Create Password">
+                                </div>
+                                <a class="btn w-100 mb-8 btn-primary shadow" href="#">Create Account</a>
+                                <p class="d-flex flex-wrap align-items-center justify-content-center">
+                                  <span class="me-1">Already have an account?</span>
+                                  <a class="btn px-0 btn-link fw-bold" href="#">Login</a>
+                                </p>
+                              </form>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true" style="color: white;">
+            <div class="modal-dialog text-center" style="background-color: #141414;">
+                <div class="modal-content" style="background-color: #141414;">
+                    <div class="pt-16 pb-32">
+                        <div class="container w-100 m-auto ">
+                            <div class="mw-md mx-auto text-center">
+                              <a class="d-inline-block mb-24" href="/">
+                                <img src="./img/logo1.png" alt="" >
+                              </a>
+                              <h3 class="mb-4">Login to your account</h3>
+                              <form action="" data-bitwarden-watching="1">
+                                <div class="mb-4">
+                                  <input class="form-control" type="email" placeholder="Email address">
+                                </div>
+                                <div class="mb-5">
+                                  <input class="form-control" type="password" placeholder="Enter your password">
+                                </div>
+                                <a class="btn w-100 mb-8 btn-primary shadow" href="#">Login</a>
+                                <p class="d-flex flex-wrap align-items-center justify-content-center">
+                                  <span class="me-1">Don't have an account?</span>
+                                  <a class="btn px-0 btn-link fw-bold" href="#">Sign Up</a>
+                                </p>
+                              </form>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <div className='Sidebar'>
             <div class="card text-center mb-3 text-white" style="width: 18rem; background-color: #141414; margin: 30px 20px;">
                 <div class="card-body">
                   <h3 class="card-title">New to memesHUB?</h3>
                   <p class="card-text">Sign up to see more content!</p>
-                  <a href="#" class="btn btn-primary">Sign Up</a>
+                  <a href="#" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</a>
                 </div>
             </div>
     
