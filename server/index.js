@@ -39,8 +39,8 @@
     
     
     app.post("/new",(req,res) => {
-        const {Username, Email, Password} = req.body;
         const pool = openDb();
+        
         pool.query('INSERT INTO UserInformation (Username, Email, Password) VALUES (Test, Test@gmail.com, Test1234) returning *', 
         [Username, Email, Password], (error, result) => {
             if (error) {
