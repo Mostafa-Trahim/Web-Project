@@ -1,20 +1,14 @@
 
 Get http://localhost:3001
 
-
+###
 POST http://localhost:3001/new HTTP/1.1
 Content-Type: : application/json
 
 
-
-
 {
-    "email": "Mustafa@gmail.com",
-    "username": "Mustafa",
-    "password": "Mustafa1234"
+    "Email": "test@gmail.com",
+    "Username": "velhotest",
+    "password": "test1234"
 }
-
-
-
-
 

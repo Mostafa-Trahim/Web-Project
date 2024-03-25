@@ -2,7 +2,7 @@
     const express = require('express');
     const cors = require('cors');
     const { Pool } = require('pg');
-const e = require('cors');
+
 
     const app = express();
     app.use(cors());
@@ -39,10 +39,10 @@ const e = require('cors');
     
     
     app.post("/new",(req,res) => {
-        const {username, Email, password} = req.body;
+        const {Username, Email, Password} = req.body;
         const pool = openDb();
-        pool.query('INSERT INTO userinformation (Username, Email, password) VALUES (Mustafa, Mustafa@gmail.com, mustafa123)', 
-        [username, Email, password], (error, result) => {
+        pool.query('INSERT INTO UserInformation (Username, Email, Password) VALUES (Test, Test@gmail.com, Test1234) returning *', 
+        [Username, Email, Password], (error, result) => {
             if (error) {
                 res.status(500).json({error: error.message})
             }
