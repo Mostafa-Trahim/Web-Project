@@ -40,9 +40,10 @@
     
     app.post("/new",(req,res) => {
         const pool = openDb();
-        
-        pool.query('INSERT INTO UserInformation (Username, Email, Password) VALUES (Test, Test@gmail.com, Test1234) returning *', 
-        [Username, Email, Password], (error, result) => {
+
+        pool.query('INSERT INTO userinformation (Email, Password, Username ) VALUES ( Test@gmail.com, Test1234, Test) returning *', 
+        [req.body.description], 
+        (error, result) => {
             if (error) {
                 res.status(500).json({error: error.message})
             }
@@ -50,7 +51,4 @@
         })
     })
     
-
-    
     app.listen(port)
-
