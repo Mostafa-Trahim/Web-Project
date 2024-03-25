@@ -15,7 +15,7 @@
     app.get('/', (req, res) => {
         res.status(200).json({result: 'success'});
         
-        Pool.query('SELECT * FROM UserInformation', (error, result) => {
+        pool.query('SELECT * FROM UserInformation', (error, result) => {
             if (error) {
                 res.status(500).json({error: error.message})
             }
@@ -30,7 +30,7 @@
             user: 'postgres',
             host: 'localhost',
             database: 'Memehub_project',
-            password: '2003',
+            password: 'admin',
             port: 5432,
         });
     
@@ -41,7 +41,7 @@
     app.post("/new",(req,res) => {
         const pool = openDb();
 
-        pool.query('INSERT INTO userinformation (Email, Password, Username ) VALUES ( Test@gmail.com, Test1234, Test) returning *', 
+        pool.query('INSERT INTO UserInformation (Email, Password, Username ) VALUES ( Test@gmail.com, Test1234, Test) returning *', 
         [req.body.description], 
         (error, result) => {
             if (error) {
