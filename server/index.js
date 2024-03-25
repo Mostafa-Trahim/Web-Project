@@ -13,9 +13,9 @@
 
 
     app.get('/', (req, res) => {
-        res.status(200).json({result: 'sucesss'});
+        res.status(200).json({result: 'success'});
         
-        Pool.qeury('SELECT * FROM UserInformation', (error, result) => {
+        Pool.query('SELECT * FROM UserInformation', (error, result) => {
             if (error) {
                 res.status(500).json({error: error.message})
             }
