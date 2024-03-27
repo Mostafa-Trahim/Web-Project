@@ -13,12 +13,13 @@ app.get('/', (req, res) => {
         return res.status(401).json({ message: 'Unauthorized' });
     });
 
-        app.listen(3000, () => {
-            console.log('Server is running on port 3000');
-        });
+    app.listen(3000, () => {
+        console.log('Server is running on port 3000');
+    });
 
     app.post("/login", (req, res) => {
         
+        res.sendFile(__dirname + '/login.html');
         const { username, password } = req.body;
         console.log(`${username} is trying to login`);
         

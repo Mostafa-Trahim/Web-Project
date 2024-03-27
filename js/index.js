@@ -1,9 +1,9 @@
-var createPostButton = document.getElementById("createPostbutton");
+// var createPostButton = document.getElementById("createPostbutton");
 
-createPostButton.addEventListener("click", function() {
-    window.location.href = "./post.html"
-    console.log(error);
-});
+// createPostButton.addEventListener("click", function() {
+//     window.location.href = "./post.html"
+//     console.log(error);
+// });
 
 
 document.addEventListener("DOMContentLoaded", function() {

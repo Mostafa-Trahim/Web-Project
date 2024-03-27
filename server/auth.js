@@ -1,6 +1,7 @@
 const {sign, verify} = require('jsonwebtoken');
+const { createToken } = require('./auth.js');
 
-const SECRET_JWT_KEY = 'my_secret'
+const SECRET_JWT_KEY = 'Vu1NK2P9v7TwhWaEpjQS'
 
 
 //function createtoken

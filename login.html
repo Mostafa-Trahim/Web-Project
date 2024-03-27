@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemesHub</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid Main h-100">
+        <div class="Header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="Header-left">
+                            <a href="/"><img src="./img/logo1.png" alt="logo"></a>
+                            <nav class="Navbar">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">🔀 Shuffle</li>
+                                    <li class="list-inline-item">🏴‍☠️ Memeland</li>
+                                    <li class="list-inline-item">💫 Vibes</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="Header-search">
+                            <span>🔍</span>
+                            <input type="text" placeholder="Search MemesHub">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="Header-right">
+                            <div class="Header-icons">
+                                <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</button>
+                                <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#CreatePostModal" >
+                                    <span>Post</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="Sidebar col-md-3">
+                    <div class="card text-center mb-3 text-white" style="background-color: #000000; margin: 30px 20px;">
+                        <div class="card-body">
+                            <h3 class="card-title">New to memesHUB?</h3>
+                            <p class="card-text">Sign up to see more content!</p>
+                            <a href="#" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</a>
+                        </div>
+                    </div>
+        
+                    <div class="Sidebar-Categories">
+                        <h2>Interests</h2>
+                        <ul>
+                            <li>
+                                <img src="img/icon1.jpg" alt="logo" />
+                                <span>Anime & Manga</span>
+                            </li>
+                            <li>
+                                <img src="img/icon2.jpg" alt="logo" />
+                                <span>Latest News</span>
+                            </li>
+                            <li>
+                                <img src="img/icon3.jpg" alt="logo" />
+                                <span>Humor</span>
+                            </li>
+                            <li>
+                                <img src="img/icon4.jpg" alt="logo" />
+                                <span>Memes</span>
+                            </li>
+                            <li>
+                                <img src="img/icon5.jpg" alt="logo" />
+                                <span>Gaming</span>
+                            </li>
+                            <li>
+                                <img src="img/icon6.jpg" alt="logo" />
+                                <span>WTF</span>
+                            </li>
+                            <li>
+                                <img src="img/icon7.jpg" alt="logo" />
+                                <span>Relationship & Dating</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 m-4" >
+
+                    <!-- <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true"> -->
+                        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 50px; color: orange;">
+                            <div class="modal-content" style="background-color: #141414;">
+                                <div class="pt-16 pb-32">
+                                    <div class="container w-100 m-auto ">
+                                        <div class="mw-md mx-auto text-center">
+                                          <a class="d-inline-block mb-24" href="/">
+                                            <img src="./img/logo1.png" alt="" >
+                                          </a>
+                                          <h3 class="mb-4">Login to your account</h3>
+                                          <form method="POST" action="/login" onsubmit="return validateLoginForm();" data-bitwarden-watching="1">
+                                            <div class="mb-4">
+                                              <input class="form-control" type="email" id="emailInput" placeholder="Email address">
+                                              <div id="warningMessage" style="color: red;"></div>
+                                            </div>
+                                            <div class="mb-5">
+                                              <input class="form-control" type="password" id="passwordInput" placeholder="Enter your password">
+                                              <div id="warningMessage" style="color: red;"></div>
+                                            </div>
+                                            <a id="loginButton" class="w-75 mb-8 btn btn-outline-warning shadow" href="#" style="border-radius: 50px;">Login</a>
+                                            <p class="d-flex flex-wrap align-items-center justify-content-center">
+                                              <span class="me-1">Don't have an account?</span>
+                                              <a class="btn px-0 btn-link fw-bold" href="#RegisterModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</a>
+                                            </p>
+                                          </form>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div>    -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>
