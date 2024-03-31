@@ -64,18 +64,24 @@ router.post('/login', async (req, res) => {
         // res.setHeader("Set-Cookie", "test=" + "myValue").json("success");
 
         const age = 1000 * 60 * 60 * 24 * 7; // 1 week
-        const JWT_SECRET= process.env.JWT_SECRET;
+        const JWT_SECRET= process.env.JWT_SECRET; // this is the secret key should be from .env but not working for now will fix it later
          
+        // const token = jwt.sign({
+        //     id: user.rows[0].id
+        // },"inv2GR5tbECaULbI2VdtXQW0XZ9IF2o3+hMl0p6eGJA=",   // this is the secret key should be from .env but not working for now will fix it later
+        // { expiresIn: age });
         const token = jwt.sign({
             id: user.rows[0].id
-        },"JWT_SECRET",  
-        { expiresIn: age });
+        }, "inv2GR5tbECaULbI2VdtXQW0XZ9IF2o3+hMl0p6eGJA=", { expiresIn: age });
+        // console.log(token);        
+
+        const { password: pass, ...userInfo } = user.rows[0];
        
-        res.cookie("token", token, {
+        res.cookie("token4", token, {
             httpOnly: true,
             // secure: true,
             maxAge: age
-        }).status(200).json({ "message":"Login successfully" }); 
+        }).status(200).json( userInfo ); 
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to Login!' });

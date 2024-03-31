@@ -33,8 +33,8 @@
                     <div class="col-md-3">
                         <div class="Header-right">
                             <div class="Header-icons">
-                                <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</button>
+                                <button class="btn btn-outline-primary me-2" id="HeaderLoginBtn" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+                                <button class="btn btn-primary" type="button" id="HeadeRegisterBtn" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</button>
                                 <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#CreatePostModal" >
                                     <span>Post</span>
                                 </button>
@@ -174,15 +174,15 @@
                             <img src="./img/logo1.png" alt="" >
                           </a>
                           <h3 class="mb-4">Login to your account</h3>
-                          <form method="post" action="/" onsubmit="return validateLoginForm();" data-bitwarden-watching="1">
+                          <form action="" id="loginForm" data-bitwarden-watching="1">
                             <div class="mb-4">
-                              <input class="form-control" type="email" id="emailInput" placeholder="Email address">
+                                <input class="form-control " type="text" name="username" required minlength="3" maxlength="10" placeholder="Username">
                             </div>
                             <div class="mb-5">
-                              <input class="form-control" type="password" id="passwordInput" placeholder="Enter your password">
+                              <input class="form-control" type="password" name="password" required placeholder="Enter your password">
                             </div>
                             <div id="LoginWarningMessage" style="color: red;"></div>
-                            <a id="loginButton" class="w-75 mb-8 btn btn-outline-warning shadow" href="#" style="border-radius: 50px;">Login</a>
+                            <a id="loginBtn" class="w-75 mb-8 btn btn-outline-warning shadow" style="border-radius: 50px;">Login</a>
                             <p class="d-flex flex-wrap align-items-center justify-content-center">
                               <span class="me-1">Don't have an account?</span>
                               <a class="btn px-0 btn-link fw-bold" href="#RegisterModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</a>
