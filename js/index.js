@@ -1,15 +1,8 @@
-// var createPostButton = document.getElementById("createPostbutton");
-
-// createPostButton.addEventListener("click", function() {
-//     window.location.href = "./post.html"
-//     console.log(error);
-// });
 // const axios = require('axios');
-
-// // import axios from 'axios';
 // import axios from 'axios';
 
 
+// I will delete this soon
 document.addEventListener("DOMContentLoaded", function() {
     var loginButton = document.getElementById('loginButton');
     loginButton.addEventListener('click', function(event) {
@@ -17,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         var email = document.getElementById('emailInput').value;
         var password = document.getElementById('passwordInput').value;
-        var warningMessage = document.getElementById('warningMessage');
+        var warningMessage = document.getElementById('LoginWarningMessage');
 
     if (email.trim() === '' || password.trim() === '') {
         warningMessage.innerText = 'Invalid email or password!';
@@ -29,21 +22,25 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 })
 
-document.getElementById('loginButton').addEventListener('click', function(event) {
-    event.preventDefault();
-    validateLoginForm();
-})
-
-const RegisterSubmit = (formData) => {
+const RegisterSubmit = async (formData) => {
   const username = formData.get('username');
   const email = formData.get('email');
   const password = formData.get('password');
 
+  //validate form if it's empty return error and put in on the warningMessage
+  if (username.trim() === '' || email.trim() === '' || password.trim() === '') {
+    const warningMessage = document.getElementById('RegisterWarningMessage');
+    warningMessage.innerText = 'Please fill all fields!';
+    return false;
+  } else {
+    const warningMessage = document.getElementById('RegisterWarningMessage');
+    warningMessage.innerText = '';
+  }
   // const warningMessage = document.getElementById('warningMessage');
 
   // console.log(username, email, password);
   try {
-    const res = axios.post('http://localhost:3000/auth/register', {
+    const res = await axios.post('http://localhost:3000/auth/register', {
     username,
     email,
     password
@@ -51,8 +48,9 @@ const RegisterSubmit = (formData) => {
   // redirect to home page
   window.location.href = "./index.html";
   } catch (error) { 
-    console.error(error);
-    // warningMessage.innerText = error;
+    console.error("cyka error : " + error);
+    const warningMessage = document.getElementById('RegisterWarningMessage');
+    warningMessage.innerText = error;
   }
 }
 

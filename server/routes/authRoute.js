@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
     // Hash the password!
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    console.log(hashedPassword);
+    // console.log(hashedPassword);
     // Create a new user in the database
     const newUser = await pool.query(
         'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
@@ -32,7 +32,7 @@ router.post('/register', async (req, res) => {
     res.status(201).json({"message" :"User Created Successfully!" });
 
     } catch (error) {
-        console.error(error);
+        console.error(error.detail);
         res.status(500).json({ message: 'Failed to Create User!' });
      }
 

@@ -146,6 +146,7 @@
                             <div class="mb-4">
                               <input class="form-control" type="password" name="password" placeholder="Create Password">
                             </div>
+                            <div id="RegisterWarningMessage" style="color: red;"></div>
                             <!-- <div class="mb-5">
                                 <input class="form-control" type="password" placeholder="Confirm Password">
                               </div> -->
@@ -176,12 +177,11 @@
                           <form method="post" action="/" onsubmit="return validateLoginForm();" data-bitwarden-watching="1">
                             <div class="mb-4">
                               <input class="form-control" type="email" id="emailInput" placeholder="Email address">
-                              <div id="warningMessage" style="color: red;"></div>
                             </div>
                             <div class="mb-5">
                               <input class="form-control" type="password" id="passwordInput" placeholder="Enter your password">
-                              <div id="warningMessage" style="color: red;"></div>
                             </div>
+                            <div id="LoginWarningMessage" style="color: red;"></div>
                             <a id="loginButton" class="w-75 mb-8 btn btn-outline-warning shadow" href="#" style="border-radius: 50px;">Login</a>
                             <p class="d-flex flex-wrap align-items-center justify-content-center">
                               <span class="me-1">Don't have an account?</span>
