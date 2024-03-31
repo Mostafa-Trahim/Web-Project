@@ -1,34 +1,26 @@
+// import express from 'express';
+
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
+const bodyParser = require('body-parser');
 const app = express();
+const port = 3000;
 
-const bodyparser = require("body-parser");
-const { createToken } = require('./auth.js');
-app.use(bodyparser.json());
+const postRoute = require('./routes/postRoute.js');
+const authRoute = require('./routes/authRoute.js');
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-    });
+app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-    app.get('/profile',  (req, res) => {
-        return res.status(401).json({ message: 'Unauthorized' });
-    });
+app.use('/posts', postRoute);
+app.use('/auth', authRoute); // i can change the route to "/"
 
-    app.listen(3000, () => {
-        console.log('Server is running on port 3000');
-    });
-
-    app.post("/login", (req, res) => {
-        
-        res.sendFile(__dirname + '/login.html');
-        const { username, password } = req.body;
-        console.log(`${username} is trying to login`);
-        
-        if (username === 'john' && password === 'password') {
-            return res.json({
-                 token: createToken(username), 
-        });
-        }
-        return res
-        .status(401)
-        .json({ message: "the credentials provided are invalid" });
-    });
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+ 
