@@ -9,14 +9,14 @@ const RegisterSubmit = async (formData) => {
   const password = formData.get('password');
 
   //validate form if it's empty return error and put in on the warningMessage
-  // if (username.trim() === '' || email.trim() === '' || password.trim() === '') {
-  //   const warningMessage = document.getElementById('RegisterWarningMessage');
-  //   warningMessage.innerText = 'Please fill all fields!';
-  //   return false;
-  // } else {
-  //   const warningMessage = document.getElementById('RegisterWarningMessage');
-  //   warningMessage.innerText = '';
-  // }
+  if (username.trim() === '' || email.trim() === '' || password.trim() === '') {
+    const warningMessage = document.getElementById('RegisterWarningMessage');
+    warningMessage.innerText = 'Please fill all fields!';
+    return false;
+  } else {
+    const warningMessage = document.getElementById('RegisterWarningMessage');
+    warningMessage.innerText = '';
+  }
   // const warningMessage = document.getElementById('warningMessage');
 
   // console.log(username, email, password);
@@ -28,6 +28,7 @@ const RegisterSubmit = async (formData) => {
   })
   // redirect to home page
   window.location.href = "./index.html";
+  // window.location.href = "#LoginModal";
   } catch (error) { 
     console.error("cyka error : " + error);
     const warningMessage = document.getElementById('RegisterWarningMessage');
@@ -42,14 +43,14 @@ const LoginSubmit = async (formData) => {
   // console.log(username, password);
 
   //validate form if it's empty return error and put in on the warningMessage
-  // if (username.trim() === '' || password.trim() === '') {
-  //   const warningMessage = document.getElementById('LoginWarningMessage');
-  //   warningMessage.innerText = 'Please fill all fields!';
-  //   return false;
-  // } else {
-  //   const warningMessage = document.getElementById('LoginWarningMessage');
-  //   warningMessage.innerText = '';
-  // }
+  if (username.trim() === '' || password.trim() === '') {
+    const warningMessage = document.getElementById('LoginWarningMessage');
+    warningMessage.innerText = 'Please fill all fields!';
+    return false;
+  } else {
+    const warningMessage = document.getElementById('LoginWarningMessage');
+    warningMessage.innerText = '';
+  }
   // const warningMessage = document.getElementById('warningMessage');
 
   // console.log(username, email, password);
@@ -69,7 +70,7 @@ const LoginSubmit = async (formData) => {
   localStorage.setItem("token", res.data.token);
 
   // redirect to home page
-  // window.location.href = "./index.html"; 
+  window.location.href = "./index.html"; 
 
   } catch (error) { 
     console.error("cyka error : " + error);
