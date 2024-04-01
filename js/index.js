@@ -116,20 +116,27 @@ function showLoggedInUserInfo() {
     // Hide Login/Signup buttons
     document.getElementById("HeaderLoginBtn").style.display = "none";
     document.getElementById("HeadeRegisterBtn").style.display = "none";
+    document.getElementById("SignUpCardPop").style.display = "none";
     // Show username in the header
     const headerRight = document.querySelector(".Header-right");
+    const headerIcons = document.querySelector(".Header-icons")
     const usernameElement = document.createElement("span");
-    usernameElement.textContent = `Welcome, ${user.username}!`;
+    usernameElement.textContent = `${user.username}!`;
+    usernameElement.style.fontWeight = "bold"
+    usernameElement.style.cursor = "pointer"
     const logoutButton = document.createElement("button");
     logoutButton.textContent = "Logout";
+    logoutButton.setAttribute('class', 'btn btn-danger text-white me-2')
     logoutButton.onclick = function() {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       window.location.href = "./index.html";
     };
+    headerIcons.appendChild(usernameElement);
+    headerIcons.appendChild(logoutButton);
     
-    headerRight.appendChild(usernameElement);
-    headerRight.appendChild(logoutButton);
+    // headerRight.appendChild(usernameElement);
+    // headerRight.appendChild(logoutButton);
   }
 }
 
