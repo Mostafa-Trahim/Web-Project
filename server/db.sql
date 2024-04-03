@@ -7,6 +7,7 @@
 
 drop table posts;
 drop table users;
+drop table comment;
 
 -- create users table
 
