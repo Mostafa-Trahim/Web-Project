@@ -1,3 +1,7 @@
+-- create database
+
+	create database Memehub_project,
+
 
 -- drop tables
 
