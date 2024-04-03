@@ -26,10 +26,34 @@ CREATE TABLE posts (
   id BIGSERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(255) NOT NULL,
   interest VARCHAR(200) NOT NULL,
-  url VARCHAR(255) NOT NULL
+  url VARCHAR(255) NOT NULL,
+    user_id int,
+    constraint fk_account
+      foreign key(user_id)
+        references users(id)
 );
 
 -- select all posts
 
 select * from posts
+
+-- create comments table
+
+create table comment (
+  id BIGSERIAL primary key,
+  comment_text text not null,
+  saved timestamp default current_timestamp,
+  post_id int,
+    constraint fk_post
+      foreign key (post_id)
+        references posts(id),
+  user_id int,
+    constraint fk_account
+      foreign key (user_id)
+        references users(id)
+)
+
+-- select all comments
+
+select * from comment;
 
