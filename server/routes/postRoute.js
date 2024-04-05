@@ -30,12 +30,12 @@ router.get('/',async (req, res) => {
 
 // Create a new post
 router.post('/create', async (req, res) => {
-  const { title, interest, url, user_id } = req.body;
+  const { title,  url, interest} = req.body;
 
   try {
     const newPost = await pool.query(
-      'INSERT INTO posts (title, interest, url, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
-      [title, interest, url, user_id]
+      'INSERT INTO posts (title, url, interest) VALUES ($1, $2, $3) RETURNING *',
+      [title, url, interest]
     );
 
     res.status(201).json(newPost.rows[0]);

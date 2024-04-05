@@ -188,18 +188,18 @@
                             <img src="./img/logo1.png" alt="" >
                           </a>
                           <h3 class="mb-4">Create a post</h3>
-                          <form action="" data-bitwarden-watching="1">
+                          <form action="" data-bitwarden-watching="1" id="createPostForm">
                             <div class="mb-4">
-                              <input class="form-control" type="text" placeholder="Title">
+                              <input class="form-control" type="text" name="title" placeholder="Title">
                             </div>
                             <!-- <div class="mb-4">
                               <input class="form-control" type="text" placeholder="Category">
                             </div> -->
                             <div class="mb-4">
-                              <input class="form-control" type="file" placeholder="Upload Image">
+                              <input class="form-control" type="text" name="url" placeholder="Type Image URL">
                             </div>
                             <div class="mb-4">
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" aria-label="Default select example" name="interest">
                                     <option selected>Choose an interest</option>
                                     <option value="1">Anime & Manga</option>
                                     <option value="2">Latest News</option>

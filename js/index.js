@@ -108,6 +108,50 @@ const getPosts = async () => {
 
 window.onload = getPosts();
 
+const createPost = async (formData) => {
+  const title = formData.get('title');
+  const url = formData.get('url');
+  const selectElement = document.querySelector('.form-select');
+  const selectedOption = selectElement.selectedOptions[0]; // Get the selected option
+  const interest = selectedOption.textContent; // Get the text content of the selected option
+
+
+  console.log(title, url, interest);
+
+  if (title.trim() === '' || url.trim() === '' || interest.trim() === '') {
+    const warningMessage = document.getElementById('CreatePostWarningMessage');
+    warningMessage.innerText = 'Please fill all fields!';
+    return false;
+  }
+
+  try {
+    const res = await axios.post(`${BackendUrl}/posts/create`, {
+    title,
+    url,
+    interest
+  })
+  console.log(res.data);
+  getPosts();
+  } catch (error) {
+    console.error("cyka error : " + error);
+    const warningMessage = document.getElementById('CreatePostWarningMessage');
+    warningMessage.innerText = "Failed to create post!";
+  }
+}
+
+document.getElementById('createPostForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent the default form submission behavior
+  const formData = new FormData(this);
+  createPost(formData);
+});
+
+document.getElementById('createNewPostBtn').addEventListener('click', function(e) {
+  e.preventDefault(); // Prevent the default button click behavior
+  const formData = new FormData(document.getElementById('createPostForm'));
+  createPost(formData);
+});
+
+
 
 
 document.getElementById('registerForm').addEventListener('submit', function(e) {
