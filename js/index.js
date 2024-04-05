@@ -79,6 +79,35 @@ const LoginSubmit = async (formData) => {
   }
 }
 
+const getPosts = async () => {
+  try {
+    const response = await axios.get(`${BackendUrl}/posts`);
+    const posts = response.data;
+    console.log(posts);
+    const postsContainer = document.getElementById('postsContainer');
+    postsContainer.innerHTML = '';
+    posts.forEach(post => {
+      const postElement = document.createElement('div');
+      postElement.className = 'card mb-3 text-white';
+      postElement.style = 'background-color: #1d1d1d;';
+      postElement.innerHTML = `
+        <div class="card-body">
+          <p class="card-text">  <img src="/img/icon4.jpg" alt="logo" id="CardLogoImg" />${post.interest}</p>
+          <h3 class="card-title">${post.title}</h5>
+          <img src=${post.url} class="card-img-top" alt="post">
+        </div>
+      `;
+      postsContainer.appendChild(postElement); // I will add btns to react
+    }
+    );
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+  }
+}
+
+
+window.onload = getPosts();
+
 
 
 document.getElementById('registerForm').addEventListener('submit', function(e) {
