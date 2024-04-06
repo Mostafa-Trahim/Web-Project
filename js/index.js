@@ -95,8 +95,34 @@ const getPosts = async () => {
           <p class="card-text">  <img src="/img/icon4.jpg" alt="logo" id="CardLogoImg" />${post.interest}</p>
           <h3 class="card-title">${post.title}</h5>
           <img src=${post.url} class="card-img-top" alt="post">
+          <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
+            <i class="bi bi-arrow-up-square-fill"> Up</i>
+            <i class="bi bi-arrow-down-square-fill"> Down</i>
+            <i class="bi bi-chat-left-text"><span> Comment</span></i>
+            <i class="bi bi-share"> <span>Share</span></i>
+          </div>
         </div>
       `;
+      const icons = postElement.querySelectorAll('i');
+      icons.forEach(icon => {
+        icon.style.cursor = 'pointer';
+        icon.style.gap = '0.5rem';
+        icon.style.fontSize = '1.2rem';
+        icon.style.display = 'flex';
+        icon.style.alignItems = 'center';
+        icon.style.padding = '0.5rem';
+        icon.style.borderRadius = '0.5rem';
+        icon.onmouseover = function() {
+          icon.style.backgroundColor = 'whitesmoke';
+        };
+        icon.onmouseout = function() {
+          icon.style.backgroundColor = 'transparent';
+        };
+        icon.addEventListener('click', () => {
+          console.log('Icon clicked:', icon);
+        });
+      }
+      );
       postsContainer.appendChild(postElement); // I will add btns to react
     }
     );
