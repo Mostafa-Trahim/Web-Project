@@ -237,6 +237,12 @@ function showLoggedInUserInfo() {
     // headerRight.appendChild(usernameElement);
     // headerRight.appendChild(logoutButton);
   }
+    if (!user){
+      const CreatePostModal = document.getElementById('CreatePosts');
+    CreatePostModal.style.display = 'none';
+    const CreatePostBtn = document.getElementById('CreatePostBtn');
+    CreatePostBtn.style.display = 'none';
+  }
 }
 
 // Call this function when the page loads to check if the user is logged in
