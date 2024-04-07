@@ -233,6 +233,10 @@ const createPost = async (formData) => {
   })
   console.log(res.data);
   getPosts();
+  document.getElementById('createPostForm').reset();
+  // close the modal
+  $('#CreatePostModal').modal('hide');
+
   } catch (error) {
     console.error("cyka error : " + error);
     const warningMessage = document.getElementById('CreatePostWarningMessage');
