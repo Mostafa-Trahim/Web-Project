@@ -79,6 +79,18 @@ const LoginSubmit = async (formData) => {
   }
 }
 
+const interestImages = {
+'Anime & Manga': '/img/icon1.jpg',
+'Latest News': '/img/icon2.jpg',
+'Humor': '/img/icon3.jpg',
+'Memes': '/img/icon4.jpg',
+'Gaming': '/img/icon5.jpg',
+'WTF': '/img/icon6.jpg',
+'Relationship & Dating': '/img/icon7.jpg',
+'Sports': '/img/icon8.jpg',
+'Wholesome': '/img/icon9.jpg',
+};
+
 const getPosts = async () => {
   try {
     const response = await axios.get(`${BackendUrl}/posts`);
@@ -90,9 +102,10 @@ const getPosts = async () => {
       const postElement = document.createElement('div');
       postElement.className = 'card mb-3 text-white';
       postElement.style = 'background-color: #1d1d1d;';
+      const interestImage = interestImages[post.interest];
       postElement.innerHTML = `
         <div class="card-body">
-          <p class="card-text">  <img src="/img/icon4.jpg" alt="logo" id="CardLogoImg" />${post.interest}</p>
+          <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}</p>
           <h3 class="card-title">${post.title}</h5>
           <img src=${post.url} class="card-img-top" alt="post">
           <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
@@ -121,15 +134,13 @@ const getPosts = async () => {
         icon.addEventListener('click', () => {
           console.log('Icon clicked:', icon);
         });
-      }
-      );
+      });
       postsContainer.appendChild(postElement); // I will add btns to react
-    }
-    );
+    });
   } catch (error) {
     console.error('Error fetching posts:', error);
   }
-}
+};
 
 
 window.onload = getPosts();

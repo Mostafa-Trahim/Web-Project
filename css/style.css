@@ -248,3 +248,11 @@
 .PostIcons:hover {
     color: #ff0000;
 }
+
+.interest-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    margin-right: 5px;
+    object-fit: contain;
+  }
