@@ -15,18 +15,30 @@ const pool = new Pool({
 
 
 
-router.get('/',async (req, res) => {
+router.get('/', async (req, res) => {
+  const { category } = req.query;
+  let queryText = 'SELECT * FROM posts';
+
+  if (category) {
+    queryText = `SELECT * FROM posts WHERE interest = $1`;
+  }
 
   try {
-    const posts = await pool.query('SELECT * FROM posts')
+    let posts;
+
+    if (category) {
+      posts = await pool.query(queryText, [category]);
+    } else {
+      posts = await pool.query(queryText);
+    }
+
     const rows = posts.rows ? posts.rows : [];
     res.status(200).json(rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to fetch posts' });
   }
-  
-})
+});
 
 // Create a new post
 router.post('/create', async (req, res) => {
