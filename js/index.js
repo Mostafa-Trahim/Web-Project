@@ -26,6 +26,10 @@ const RegisterSubmit = async (formData) => {
     email,
     password
   })
+
+  // Show confirmation message
+  alert("Registration Successful!");
+
   // redirect to home page
   window.location.href = "./index.html";
   // window.location.href = "#LoginModal";
@@ -40,8 +44,6 @@ const LoginSubmit = async (formData) => {
   const username = formData.get('username');
   const password = formData.get('password');
 
-  // console.log(username, password);
-
   //validate form if it's empty return error and put in on the warningMessage
   if (username.trim() === '' || password.trim() === '') {
     const warningMessage = document.getElementById('LoginWarningMessage');
@@ -51,33 +53,33 @@ const LoginSubmit = async (formData) => {
     const warningMessage = document.getElementById('LoginWarningMessage');
     warningMessage.innerText = '';
   }
-  // const warningMessage = document.getElementById('warningMessage');
 
-  // console.log(username, email, password);
   try {
     const res = await axios.post(`${BackendUrl}/auth/login`, {
-    username,
-    password
-  })
-  console.log(res.data);
-  // set user to local storage
+      username,
+      password
+    });
 
-  localStorage.setItem("user", JSON.stringify(res.data));
+    console.log(res.data);
+    // set user to local storage
+    localStorage.setItem("user", JSON.stringify(res.data));
+    console.log(res.data.token);
 
-  console.log(res.data.token);
+    // set token to local storage
+    localStorage.setItem("token", res.data.token);
 
-  // set token to local storage
-  localStorage.setItem("token", res.data.token);
+    // show confirmation message
+    alert("Login Successful!");
 
-  // redirect to home page
-  window.location.href = "./index.html"; 
-
+    // redirect to home page
+    window.location.href = "./index.html"; 
   } catch (error) { 
     console.error("cyka error : " + error);
     const warningMessage = document.getElementById('LoginWarningMessage');
     warningMessage.innerText = "Invalid Credentials!";
   }
 }
+
 
 const interestImages = {
 'Anime & Manga': '/img/icon1.jpg',
@@ -234,8 +236,11 @@ const createPost = async (formData) => {
   console.log(res.data);
   getPosts();
   document.getElementById('createPostForm').reset();
-  // close the modal
-  $('#CreatePostModal').modal('hide');
+
+  // Show confirmation message
+  alert("Post Created!");
+  // redirect to home page
+  window.location.href = "./index.html"; 
 
   } catch (error) {
     console.error("cyka error : " + error);

@@ -165,7 +165,7 @@
                               <input class="form-control" type="password" name="password" required placeholder="Enter your password">
                             </div>
                             <div id="LoginWarningMessage" style="color: red;"></div>
-                            <a id="loginBtn" class="w-75 mb-8 btn btn-outline-warning shadow" style="border-radius: 50px;">Login</a>
+                            <a class="btn w-75 mb-8 btn-outline-warning shadow" href="/" style="border-radius: 50px;" id="loginBtn">Login</a>
                             <p class="d-flex flex-wrap align-items-center justify-content-center">
                               <span class="me-1">Don't have an account?</span>
                               <a class="btn px-0 btn-link fw-bold" href="#RegisterModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</a>
@@ -220,6 +220,26 @@
                 </div>
             </div>
         </div>
+    
+    <!-- Login Confirmation Modal -->
+    <div class="modal fade" id="LoginConfirmationModal" tabindex="-1" aria-labelledby="LoginConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 50px; color: orange;">
+            <div class="modal-content" style="background-color: #141414;">
+                <div class="pt-16 pb-32">
+                    <div class="container w-100 m-auto ">
+                        <div class="mw-md mx-auto text-center">
+                          <a class="d-inline-block mb-24" href="/">
+                            <img src="./img/logo1.png" alt="" >
+                          </a>
+                          <h3 class="mb-4">Login Successful</h3>
+                          <p class="mb-4">You have successfully logged in</p>
+                          <a class="btn w-75 mb-8 btn-outline-warning shadow" href="" id="loginConfirmationBtn" style="border-radius: 50px;">Continue</a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="./js/index.js"></script>
