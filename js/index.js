@@ -346,6 +346,8 @@ function showLoggedInUserInfo() {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       window.location.href = "./index.html";
+      // Show confirmation message
+      alert("Logged Out Successfully!");
     };
     headerIcons.appendChild(usernameElement);
     headerIcons.appendChild(logoutButton);
