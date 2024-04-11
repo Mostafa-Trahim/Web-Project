@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemesHub</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="container-fluid Main h-100" style="min-height: 100vh;">
+        <div class="Header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="Header-left">
+                            <a href="/"><img src="./img/logo1.png" alt="logo"></a>
+                            <nav class="Navbar">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item" id="shuffleButton">🔀 Shuffle</li>
+                                    <li class="list-inline-item">🏴‍☠️ Memeland</li>
+                                    <li class="list-inline-item">💫 Vibes</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="Header-search">
+                            <span>🔍</span>
+                            <input type="text" placeholder="Search MemesHub">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="Header-right">
+                            <div class="Header-icons">
+                                <button class="btn btn-outline-primary me-2" id="HeaderLoginBtn" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+                                <button class="btn btn-primary" type="button" id="HeadeRegisterBtn" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</button>
+                                <button class="btn btn-warning text-white" id="CreatePostBtn" data-bs-toggle="modal" data-bs-target="#CreatePostModal" >
+                                    <span>Post</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container ">
+            <div class="row">
+                <div class="Sidebar col-md-3">
+                    <div class="card text-center mb-3 text-white" id="SignUpCardPop" style="background-color: #000000; margin: 30px 20px;">
+                        <div class="card-body">
+                            <h3 class="card-title">New to memesHUB?</h3>
+                            <p class="card-text">Sign up to see more content!</p>
+                            <a href="#" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</a>
+                        </div>
+                    </div>
+        
+                    <div class="Sidebar-Categories">
+                        <h2>Interests</h2>
+                        <ul>
+                            <li>
+                                <img src="img/icon1.jpg" alt="logo" />
+                                <span>Anime & Manga</span>
+                            </li>
+                            <li>
+                                <img src="img/icon2.jpg" alt="logo" />
+                                <span>Latest News</span>
+                            </li>
+                            <li>
+                                <img src="img/icon3.jpg" alt="logo" />
+                                <span>Humor</span>
+                            </li>
+                            <li>
+                                <img src="img/icon4.jpg" alt="logo" />
+                                <span>Memes</span>
+                            </li>
+                            <li>
+                                <img src="img/icon5.jpg" alt="logo" />
+                                <span>Gaming</span>
+                            </li>
+                            <li>
+                                <img src="img/icon6.jpg" alt="logo" />
+                                <span>WTF</span>
+                            </li>
+                            <li>
+                                <img src="img/icon7.jpg" alt="logo" />
+                                <span>Relationship & Dating</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- profile information -->
+
+                <div id="profileContainer"></div>
+
+    
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="RegisterModal" tabindex="-1" aria-labelledby="RegisterModalLabel" aria-hidden="true" >
+        <div class="modal-dialog text-center" style="background-color: #141414; border-radius: 50px; color: orange;">
+            <div class="modal-content" style="background-color: #141414; ">
+                <div class="pt-16 pb-32">
+                    <div class="container w-100 m-auto ">
+                        <div class="mw-md mx-auto text-center">
+                          <a class="d-inline-block mb-24" href="/">
+                            <img src="./img/logo1.png" alt="" >
+                          </a>
+                          <h3 class="mb-4">Join for free</h3>
+                          <form action="" id="registerForm" data-bitwarden-watching="1">
+                            <div class="mb-4">
+                              <input class="form-control " type="text" name="username" placeholder="Username">
+                            </div>
+                            <div class="mb-4">
+                              <input class="form-control" type="email" name="email" placeholder="Email address">
+                            </div>
+                            <div class="mb-4">
+                              <input class="form-control" type="password" name="password" placeholder="Create Password">
+                            </div>
+                            <div id="RegisterWarningMessage" style="color: red;"></div>
+                            <!-- <div class="mb-5">
+                                <input class="form-control" type="password" placeholder="Confirm Password">
+                              </div> -->
+                            <a class="btn w-75 mb-8 btn-outline-warning shadow" href="/" style="border-radius: 50px;" id="registerBtn">Create Account</a>
+                            <p class="d-flex flex-wrap align-items-center justify-content-center">
+                              <span class="me-1">Already have an account?</span>
+                              <a class="btn px-0 btn-link fw-bold" href="#LoginModal" data-bs-toggle="modal" data-bs-dismiss="modal">Login</a>
+                            </p>
+                          </form>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 150px; color: orange;">
+            <div class="modal-content" style="background-color: #141414;">
+                <div class="pt-16 pb-32">
+                    <div class="container w-100 m-auto ">
+                        <div class="mw-md mx-auto text-center">
+                          <a class="d-inline-block mb-24" href="/">
+                            <img src="./img/logo1.png" alt="" >
+                          </a>
+                          <h3 class="mb-4">Login to your account</h3>
+                          <form action="" id="loginForm" data-bitwarden-watching="1">
+                            <div class="mb-4">
+                                <input class="form-control " type="text" name="username" required minlength="3" maxlength="10" placeholder="Username">
+                            </div>
+                            <div class="mb-5">
+                              <input class="form-control" type="password" name="password" required placeholder="Enter your password">
+                            </div>
+                            <div id="LoginWarningMessage" style="color: red;"></div>
+                            <a class="btn w-75 mb-8 btn-outline-warning shadow" href="/" style="border-radius: 50px;" id="loginBtn">Login</a>
+                            <p class="d-flex flex-wrap align-items-center justify-content-center">
+                              <span class="me-1">Don't have an account?</span>
+                              <a class="btn px-0 btn-link fw-bold" href="#RegisterModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</a>
+                            </p>
+                          </form>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    
+    <!-- Create post Modal -->
+    <div class="modal fade" id="CreatePostModal" tabindex="-1" aria-labelledby="CreatePostModalLabel" aria-hidden="true">
+        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 50px; color: orange;">
+            <div class="modal-content" style="background-color: #141414;">
+                <div class="pt-16 pb-32">
+                    <div class="container w-100 m-auto ">
+                        <div class="mw-md mx-auto text-center">
+                          <a class="d-inline-block mb-24" href="/">
+                            <img src="./img/logo1.png" alt="" >
+                          </a>
+                          <h3 class="mb-4">Create a post</h3>
+                          <form action="" data-bitwarden-watching="1" id="createPostForm">
+                            <div class="mb-4">
+                              <input class="form-control" type="text" name="title" placeholder="Title">
+                            </div>
+                            <!-- <div class="mb-4">
+                              <input class="form-control" type="text" placeholder="Category">
+                            </div> -->
+                            <div class="mb-4">
+                              <input class="form-control" type="text" name="url" placeholder="Type Image URL">
+                            </div>
+                            <div class="mb-4">
+                                <select class="form-select" aria-label="Default select example" name="interest">
+                                    <option selected>Choose an interest</option>
+                                    <option value="1">Anime & Manga</option>
+                                    <option value="2">Latest News</option>
+                                    <option value="3">Humor</option>
+                                    <option value="4">Memes</option>
+                                    <option value="5">Gaming</option>
+                                    <option value="6">WTF</option>
+                                    <option value="7">Relationship & Dating</option>
+                                    <option value="8">Sports</option>
+                                    <option value="9">Wholesome</option>
+                                  </select>
+                            </div>
+                            <a class="btn w-75 mb-8 btn-outline-warning shadow" href="" id="createNewPostBtn" style="border-radius: 50px; margin-bottom: 10px;">Create Post</a>
+                          </form>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    
+    <!-- Login Confirmation Modal -->
+    <div class="modal fade" id="LoginConfirmationModal" tabindex="-1" aria-labelledby="LoginConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 50px; color: orange;">
+            <div class="modal-content" style="background-color: #141414;">
+                <div class="pt-16 pb-32">
+                    <div class="container w-100 m-auto ">
+                        <div class="mw-md mx-auto text-center">
+                          <a class="d-inline-block mb-24" href="/">
+                            <img src="./img/logo1.png" alt="" >
+                          </a>
+                          <h3 class="mb-4">Login Successful</h3>
+                          <p class="mb-4">You have successfully logged in</p>
+                          <a class="btn w-75 mb-8 btn-outline-warning shadow" href="" id="loginConfirmationBtn" style="border-radius: 50px;">Continue</a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

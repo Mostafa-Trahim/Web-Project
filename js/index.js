@@ -333,6 +333,12 @@ function showLoggedInUserInfo() {
     usernameElement.textContent = `${user.username}!`;
     usernameElement.style.fontWeight = "bold"
     usernameElement.style.cursor = "pointer"
+
+    // Add event listener to redirect to profile page
+    usernameElement.addEventListener('click', function() {
+      window.location.href = "profile.html"; // Change "profile.html" to the actual URL of your profile page
+    });
+
     const logoutButton = document.createElement("button");
     logoutButton.textContent = "Logout";
     logoutButton.setAttribute('class', 'btn btn-danger text-white me-2')
@@ -354,6 +360,7 @@ function showLoggedInUserInfo() {
     CreatePostBtn.style.display = 'none';
   }
 }
+
 
 // Call this function when the page loads to check if the user is logged in
 window.onload = showLoggedInUserInfo;
