@@ -15,3 +15,39 @@ Content-Type: application/json
     "username": "ropz",
     "password": "12301230"
 }
+
+
+###get posts
+
+GET http://localhost:3000/posts
+
+###create post
+
+POST http://localhost:3000/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "this is a title",
+      "url": "https://preview.redd.it/imagine-sleeping-at-your-own-trial-v0-atn57nds0suc1.jpeg?auto=webp&s=892cb28b257578bf74f9c05165e4b97ef9f446d9" ,
+    "interest": "funny",
+}
+
+
+
+### add new comment
+
+POST http://localhost:3000/comments HTTP/1.1
+Content-Type: application/json
+
+{
+    "comment_text": "this is a comment",
+    "post_id": "3",
+    "user_id": "1"
+}
+
+
+### get comments
+ 
+GET http://localhost:3000/comments
+
+

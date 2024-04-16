@@ -9,6 +9,14 @@ drop table posts;
 drop table users;
 drop table comment;
 
+--drop tables if exists
+
+  drop table if exists posts;
+
+  drop table if exists users;
+
+  drop table if exists comment;
+
 -- create users table
 
 create table users (

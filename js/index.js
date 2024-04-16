@@ -123,8 +123,31 @@ const getPosts = async () => {
             <i class="bi bi-chat-left-text"><span> Comment</span></i>
             <i class="bi bi-share"> <span>Share</span></i>
           </div>
+          <div class="comment-box" style="display: none;">
+          <textarea class="form-control bg-dark text-light" id="comment" rows="1 placeholder="Add a comment..."></textarea>
+          <button class="btn btn-secondary mt-2">Submit</button>
+        </div>
         </div>
       `;
+// Find the comment button
+const commentButton = postElement.querySelector('.bi-chat-left-text');
+
+// Add a click event listener to the comment button
+commentButton.addEventListener('click', () => {
+  // Find the comment box
+  const commentBox = postElement.querySelector('.comment-box');
+  
+  // Toggle the display of the comment box
+  if (commentBox.style.display === 'none') {
+    commentBox.style.display = 'block';
+  } else {
+    commentBox.style.display = 'none';
+  }
+});
+
+
+
+
       const icons = postElement.querySelectorAll('i');
       icons.forEach(icon => {
         icon.style.cursor = 'pointer';

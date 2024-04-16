@@ -10,6 +10,7 @@ const port = 3000;
 
 const postRoute = require('./routes/postRoute.js');
 const authRoute = require('./routes/authRoute.js');
+const commentRoute = require('./routes/commentRoute.js');
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/posts', postRoute);
 app.use('/auth', authRoute); // i can change the route to "/"
+app.use('/comments', commentRoute); 
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
