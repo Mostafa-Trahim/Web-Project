@@ -27,11 +27,15 @@ const RegisterSubmit = async (formData) => {
     password
   })
 
-  // Show confirmation message
-  alert("Registration Successful!");
-
   // redirect to home page
-  window.location.href = "./index.html";
+    setTimeout(() => window.location.href = "./index.html" , 2000);
+
+  // Show confirmation message
+  const toastLiveExample = document.getElementById('regToast');
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastBootstrap.show()
+
+  
   // window.location.href = "#LoginModal";
   } catch (error) { 
     console.error("cyka error : " + error);
@@ -68,11 +72,14 @@ const LoginSubmit = async (formData) => {
     // set token to local storage
     localStorage.setItem("token", res.data.token);
 
-    // show confirmation message
-    alert("Login Successful!");
-
     // redirect to home page
-    window.location.href = "./index.html"; 
+    setTimeout(() => window.location.href = "./index.html" , 2000); 
+
+    // Show confirmation message
+    const toastLiveExample = document.getElementById('loginToast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+    
   } catch (error) { 
     console.error("cyka error : " + error);
     const warningMessage = document.getElementById('LoginWarningMessage');
@@ -237,10 +244,13 @@ const createPost = async (formData) => {
   getPosts();
   document.getElementById('createPostForm').reset();
 
-  // Show confirmation message
-  alert("Post Created!");
   // redirect to home page
-  window.location.href = "./index.html"; 
+  setTimeout(() => window.location.href = "./index.html" , 2000);
+
+  // Show confirmation message
+  const toastLiveExample = document.getElementById('createToast');
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastBootstrap.show()
 
   } catch (error) {
     console.error("cyka error : " + error);
@@ -248,6 +258,7 @@ const createPost = async (formData) => {
     warningMessage.innerText = "Failed to create post!";
   }
 }
+
 
 document.getElementById('createPostForm').addEventListener('submit', function(e) {
   e.preventDefault(); // Prevent the default form submission behavior
@@ -345,9 +356,12 @@ function showLoggedInUserInfo() {
     logoutButton.onclick = function() {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      window.location.href = "./index.html";
+      setTimeout(() => window.location.href = "./index.html" , 2000);
+
       // Show confirmation message
-      alert("Logged Out Successfully!");
+      const toastLiveExample = document.getElementById('logoutToast');
+      const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+      toastBootstrap.show()
     };
     headerIcons.appendChild(usernameElement);
     headerIcons.appendChild(logoutButton);
@@ -363,6 +377,15 @@ function showLoggedInUserInfo() {
   }
 }
 
+const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+
+if (toastTrigger) {
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastTrigger.addEventListener('click', () => {
+    toastBootstrap.show()
+  })
+}
 
 // Call this function when the page loads to check if the user is logged in
 window.onload = showLoggedInUserInfo;
