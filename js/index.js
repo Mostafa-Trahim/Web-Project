@@ -118,10 +118,10 @@ const getPosts = async () => {
           <h3 class="card-title">${post.title}</h5>
           <img src=${post.url} class="card-img-top" alt="post">
           <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
-            <i class="bi bi-arrow-up-square-fill"> Up</i>
-            <i class="bi bi-arrow-down-square-fill"> Down</i>
-            <i class="bi bi-chat-left-text"><span> Comment</span></i>
-            <i class="bi bi-share"> <span>Share</span></i>
+            <i class="bi bi-arrow-up-square-fill" id="UpIcon"> Up</i>
+            <i class="bi bi-arrow-down-square-fill" id="DownIcon"> Down</i>
+            <i class="bi bi-chat-left-text" id="CommentIcon"><span> Comment</span></i>
+            <i class="bi bi-share" id="ShareIcon"> <span>Share</span></i>
           </div>
           <div class="comment-box" style="display: none;">
           <textarea class="form-control bg-dark text-light" id="comment" rows="1 placeholder="Add a comment..."></textarea>
@@ -164,7 +164,29 @@ commentButton.addEventListener('click', () => {
           icon.style.backgroundColor = 'transparent';
         };
         icon.addEventListener('click', () => {
-          console.log('Icon clicked:', icon);
+
+          if (!localStorage.getItem("user")) {
+            alert("You must be logged in to interact with posts!");
+            return;
+          }
+          // for each to see which icon is clicked and do the action depending on the icon
+
+          if (icon.id === 'UpIcon') {
+            console.log('Up Icon clicked:', icon);
+            upvotePost(post.id);
+            icon.style.color = 'green';
+          }
+          if (icon.id === 'DownIcon') {
+            console.log('Down Icon clicked:', icon);
+            downvotePost(post.id);
+            icon.style.color = 'red';
+          }
+          if (icon.id === 'CommentIcon') {
+            console.log('Comment Icon clicked:', icon);
+          }
+          if (icon.id === 'ShareIcon') {
+            console.log('Share Icon clicked:', icon);
+          }
         });
       });
       postsContainer.appendChild(postElement); // I will add btns to react
@@ -174,6 +196,43 @@ commentButton.addEventListener('click', () => {
   }
 };
 
+const upvotePost = async (postId) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    alert("You must be logged in to upvote a post!");
+    return;
+  }
+  const userId = user.id;
+  console.log('Upvoting post:', postId);
+  try {
+    const res = await axios.post(`${BackendUrl}/posts/${postId}/upvote`, {
+      userId
+    });
+    console.log(res.data);
+    // getPosts();
+  } catch (error) {
+    console.error('Error upvoting post:', error);
+  }
+};
+
+const downvotePost = async (postId) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    alert("You must be logged in to downvote a post!");
+    return;
+  }
+  const userId = user.id;
+  console.log('Downvoting post:', postId);
+  try {
+    const res = await axios.post(`${BackendUrl}/posts/${postId}/downvote`, {
+      userId
+    });
+    console.log(res.data);
+    // getPosts();
+  } catch (error) {
+    console.error('Error downvoting post:', error);
+  }
+};
 
 window.onload = getPosts();
 
@@ -209,9 +268,9 @@ const displayFilteredPosts = (posts) => {
         <h3 class="card-title">${post.title}</h5>
         <img src=${post.url} class="card-img-top" alt="post">
         <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
-          <i class="bi bi-arrow-up-square-fill"> Up</i>
-          <i class="bi bi-arrow-down-square-fill"> Down</i>
-          <i class="bi bi-chat-left-text"><span> Comment</span></i>
+          <i class="bi bi-arrow-up-square-fill" id="UpIcon"> Up</i>
+          <i class="bi bi-arrow-down-square-fill" id="DownIcon"> Down</i>
+          <i class="bi bi-chat-left-text" id="CommentIcon"><span> Comment</span></i>
           <i class="bi bi-share"> <span>Share</span></i>
         </div>
       </div>
@@ -248,6 +307,8 @@ const createPost = async (formData) => {
   const selectedOption = selectElement.selectedOptions[0]; // Get the selected option
   const interest = selectedOption.textContent; // Get the text content of the selected option
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
 
   console.log(title, url, interest);
 
@@ -261,11 +322,13 @@ const createPost = async (formData) => {
     const res = await axios.post(`${BackendUrl}/posts/create`, {
     title,
     url,
-    interest
+    interest,
+    userId: user.id
   })
   console.log(res.data);
   getPosts();
   document.getElementById('createPostForm').reset();
+<<<<<<< HEAD
 
   // redirect to home page
   setTimeout(() => window.location.href = "./index.html" , 2000);
@@ -274,6 +337,10 @@ const createPost = async (formData) => {
   const toastLiveExample = document.getElementById('createToast');
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
   toastBootstrap.show()
+=======
+  // close the modal
+  
+>>>>>>> 90236a2 (userId added to posts table after creating, up/downvote first logic work)
 
   } catch (error) {
     console.error("cyka error : " + error);

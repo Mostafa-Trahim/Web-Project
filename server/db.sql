@@ -66,3 +66,17 @@ create table comment (
 
 select * from comment;
 
+-- create votes table
+
+CREATE TABLE votes (
+  id BIGSERIAL PRIMARY KEY,
+  user_id INT,
+  post_id INT,
+  vote_type VARCHAR(8) CHECK (vote_type IN ('upvote', 'downvote')), -- Define allowed values
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (post_id) REFERENCES posts(id)
+);
+
+-- select all votes
+
+select * from votes;
