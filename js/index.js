@@ -328,7 +328,6 @@ const createPost = async (formData) => {
   console.log(res.data);
   getPosts();
   document.getElementById('createPostForm').reset();
-<<<<<<< HEAD
 
   // redirect to home page
   setTimeout(() => window.location.href = "./index.html" , 2000);
@@ -337,11 +336,8 @@ const createPost = async (formData) => {
   const toastLiveExample = document.getElementById('createToast');
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
   toastBootstrap.show()
-=======
   // close the modal
   
->>>>>>> 90236a2 (userId added to posts table after creating, up/downvote first logic work)
-
   } catch (error) {
     console.error("cyka error : " + error);
     const warningMessage = document.getElementById('CreatePostWarningMessage');
