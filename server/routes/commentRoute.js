@@ -41,4 +41,18 @@ router.get('/', async (req, res) => {
     } 
 });
     
+//get user name by id
+router.get('/user/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+        res.status(200).json(user.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to fetch user' });
+    }
+}
+);
+
+
     module.exports = router;

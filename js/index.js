@@ -129,7 +129,13 @@ const getPosts = async () => {
         </div>
         </div>
       `;
-// Find the comment button
+
+
+    
+    
+
+
+  // Find the comment button
 const commentButton = postElement.querySelector('.bi-chat-left-text');
 
 // Add a click event listener to the comment button
@@ -150,9 +156,7 @@ commentButton.addEventListener('click', () => {
 const submitButton = postElement.querySelector('#submit_button');
 // Add a click event listener to the submit button
 submitButton.addEventListener('click', () => {
-  
   //alert("works") //test if the button works
-  
   // Find the comment box
   const commentBox = postElement.querySelector('.comment-box');
   // Find the comment input
@@ -176,10 +180,42 @@ submitButton.addEventListener('click', () => {
   commentInput.value = '';
     });
 
+  //put comments  from the database under the submit button
+  axios.get(`${BackendUrl}/comments`)
+  .then((response) => {     
+    const comments = response.data;
+    console.log(comments); // test if the comments are fetched
+   //get username by userid using axios
+    comments.forEach(comment => {
+      axios.get(`${BackendUrl}/comments/user/${comment.user_id}`)
+      .then((response) => {
+        const user = response.data;
+        console.log(user); // test if the user is fetched
+         // Create a div for each comment that should displayt the commenter name and the comment with bootstrap / only show when commetn box is open
+        const commentElement = document.createElement('div');
+        commentElement.className = 'card mb-3 text-white';
+        commentElement.style = 'background-color: #1d1d1d;';
+        //coment shold havae clear borders
+        commentElement.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${user.username}</h5>
+            <p class="card-text">${comment.comment_text}</p>
+          </div>  
+        `;
+        //append the comment to the comment box
+        const commentBox = postElement.querySelector('.comment-box');
+        commentBox.appendChild(commentElement);
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error);
+      });
+    });
+  })
 
+  
 
-
-
+       
+       
 
 
 
