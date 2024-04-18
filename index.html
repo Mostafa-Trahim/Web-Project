@@ -155,22 +155,10 @@
                           </div>
                         </div>
                       </div>
+                      <!--Test button-->
                       <div>
-                        <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
-
-                        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                          <div id="liveToast" class="toast border-0 text-center" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                              <strong class="me-auto">Bootstrap</strong>
-                              <small>11 mins ago</small>
-                              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                              Hello, world! This is a toast message.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <button id="testBtn" class="btn btn-primary">Test</button>       
+                      </div>         
                     </div>
 
                 </div>
@@ -309,6 +297,34 @@
                 </div>
             </div>
         </div>
+
+    <!-- Edit post modal -->
+    <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 150px; color: orange;">
+          <div class="modal-content" style="background-color: #141414;">
+              <div class="pt-16 pb-32">
+                  <div class="container w-100 m-auto">
+                      <div class="mw-md mx-auto text-center">
+                          <h3 class="modal-title mb-4" id="editModalLabel">Edit Post</h3>
+                          <form id="editForm" data-bitwarden-watching="1">
+                              <div class="mb-3">
+                                  <label for="editTitle" class="form-label visually-hidden">Title</label>
+                                  <input type="text" class="form-control" id="editTitle" placeholder="Title">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="editImageUrl" class="form-label visually-hidden">Image URL</label>
+                                  <input type="text" class="form-control" id="editImageUrl" placeholder="Image URL">
+                              </div>
+                              <div id="editWarningMessage" style="color: red;"></div>
+                              <button type="button" class="btn w-75 mb-8 btn-outline-warning shadow" id="saveChanges" style="border-radius: 50px;">Save Changes</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
 
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

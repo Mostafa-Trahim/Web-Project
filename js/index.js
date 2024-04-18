@@ -114,7 +114,10 @@ const getPosts = async () => {
       const interestImage = interestImages[post.interest];
       postElement.innerHTML = `
         <div class="card-body">
-          <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}</p>
+          <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}<div id="testButton" class="btn-group" role="group" aria-label="Basic example">
+          <button id="deletePostButton" class="btn btn-warning text-black">Delete</button>
+          <button id="editPostbutton" class="btn btn-warning text-black">Edit</button>
+        </div></p>
           <h3 class="card-title">${post.title}</h5>
           <img src=${post.url} class="card-img-top" alt="post">
           <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
@@ -129,6 +132,9 @@ const getPosts = async () => {
         </div>
         </div>
       `;
+
+
+
 // Find the comment button
 const commentButton = postElement.querySelector('.bi-chat-left-text');
 
