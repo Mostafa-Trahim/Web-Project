@@ -100,59 +100,59 @@ const interestImages = {
 'Wholesome': '/img/icon9.jpg',
 };
 
-const getPosts = async () => {
-  try {
-    const response = await axios.get(`${BackendUrl}/posts`);
-    const posts = response.data;
-    console.log(posts);
-    const postsContainer = document.getElementById('postsContainer');
-    postsContainer.innerHTML = '';
-    posts.forEach(post => {
-      const postElement = document.createElement('div');
-      postElement.className = 'card mb-3 text-white';
-      postElement.style = 'background-color: #1d1d1d;';
-      const interestImage = interestImages[post.interest];
-      postElement.innerHTML = `
-        <div class="card-body">
-          <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}</p>
-          <h3 class="card-title">${post.title}</h5>
-          <img src=${post.url} class="card-img-top" alt="post">
-          <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
-            <i class="bi bi-arrow-up-square-fill"> Up</i>
-            <i class="bi bi-arrow-down-square-fill"> Down</i>
-            <i class="bi bi-chat-left-text"><span> Comment</span></i>
-            <i class="bi bi-share"> <span>Share</span></i>
-          </div>
-        </div>
-      `;
-      const icons = postElement.querySelectorAll('i');
-      icons.forEach(icon => {
-        icon.style.cursor = 'pointer';
-        icon.style.gap = '0.5rem';
-        icon.style.fontSize = '1.2rem';
-        icon.style.display = 'flex';
-        icon.style.alignItems = 'center';
-        icon.style.padding = '0.5rem';
-        icon.style.borderRadius = '0.5rem';
-        icon.onmouseover = function() {
-          icon.style.backgroundColor = 'whitesmoke';
-        };
-        icon.onmouseout = function() {
-          icon.style.backgroundColor = 'transparent';
-        };
-        icon.addEventListener('click', () => {
-          console.log('Icon clicked:', icon);
-        });
-      });
-      postsContainer.appendChild(postElement); // I will add btns to react
-    });
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-  }
-};
+// const getPosts = async () => {
+//   try {
+//     const response = await axios.get(`${BackendUrl}/posts`);
+//     const posts = response.data;
+//     console.log(posts);
+//     const postsContainer = document.getElementById('postsContainer');
+//     postsContainer.innerHTML = '';
+//     posts.forEach(post => {
+//       const postElement = document.createElement('div');
+//       postElement.className = 'card mb-3 text-white';
+//       postElement.style = 'background-color: #1d1d1d;';
+//       const interestImage = interestImages[post.interest];
+//       postElement.innerHTML = `
+//         <div class="card-body">
+//           <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}</p>
+//           <h3 class="card-title">${post.title}</h5>
+//           <img src=${post.url} class="card-img-top" alt="post">
+//           <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
+//             <i class="bi bi-arrow-up-square-fill"> Up</i>
+//             <i class="bi bi-arrow-down-square-fill"> Down</i>
+//             <i class="bi bi-chat-left-text"><span> Comment</span></i>
+//             <i class="bi bi-share"> <span>Share</span></i>
+//           </div>
+//         </div>
+//       `;
+//       const icons = postElement.querySelectorAll('i');
+//       icons.forEach(icon => {
+//         icon.style.cursor = 'pointer';
+//         icon.style.gap = '0.5rem';
+//         icon.style.fontSize = '1.2rem';
+//         icon.style.display = 'flex';
+//         icon.style.alignItems = 'center';
+//         icon.style.padding = '0.5rem';
+//         icon.style.borderRadius = '0.5rem';
+//         icon.onmouseover = function() {
+//           icon.style.backgroundColor = 'whitesmoke';
+//         };
+//         icon.onmouseout = function() {
+//           icon.style.backgroundColor = 'transparent';
+//         };
+//         icon.addEventListener('click', () => {
+//           console.log('Icon clicked:', icon);
+//         });
+//       });
+//       postsContainer.appendChild(postElement); // I will add btns to react
+//     });
+//   } catch (error) {
+//     console.error('Error fetching posts:', error);
+//   }
+// };
 
 
-window.onload = getPosts();
+// window.onload = getPosts();
 
 document.querySelectorAll('.Sidebar-Categories li').forEach(item => {
   item.addEventListener('click', function() {
@@ -387,35 +387,94 @@ if (toastTrigger) {
   })
 }
 
- // profile information
- const displayUserProfile = (userProfile) => {
-  const profileContainer = document.getElementById('profileContainer');
-  profileContainer.innerHTML = `
-    <div class="card mb-3 text-white">
-      <div class="card-body">
-        <h3 class="card-title">Profile Information</h3>
-        <p class="card-text">Username: ${userProfile.username}</p>
-        <p class="card-text">Email: ${userProfile.email}</p>
-        <p class="card-text">Interests: ${userProfile.interests.join(', ')}</p>
-      </div>
-    </div>
-  `;
-};
-
-const getUserProfile = async () => {
-  try {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const response = await axios.get(`${BackendUrl}/users/${user.id}`);
-    const userProfile = response.data;
-    console.log(userProfile);
-    displayUserProfile(userProfile);
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-  }
-};
-
-window.addEventListener('load', getUserProfile);
-
 
 // Call this function when the page loads to check if the user is logged in
 window.onload = showLoggedInUserInfo;
+
+document.addEventListener('DOMContentLoaded', function() {
+  getProfileInfo();
+});
+
+
+function getProfileInfo() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const profileContainer = document.getElementById("profileContainer");
+  if (profileContainer) {
+    if (user) {
+      profileContainer.innerHTML = `
+        <h1 class="text-center mb-4">Profile Information</h1>
+        <div class="card text-white bg-dark mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-profile-user-icon.png" class="img-fluid rounded-start" alt="User Profile Image">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Username: ${user.username}</h5>
+                <p class="card-text">Email: ${user.email}</p>
+                <button class="btn btn-primary" id="editProfileBtn">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      // Add event listener to the edit button
+      const editProfileBtn = document.getElementById("editProfileBtn");
+      if (editProfileBtn) {
+        editProfileBtn.addEventListener("click", editProfile); // Ensure the function name is correct
+      } else {
+        console.error("Edit profile button not found.");
+      }
+    }
+  } else {
+    console.error("Profile container not found.");
+  }
+}
+
+function editProfile() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const profileContainer = document.getElementById("profileContainer");
+  if (profileContainer) {
+    profileContainer.innerHTML = `
+      <h1 class="text-center mb-4">Edit Profile</h1>
+      <form id="editProfileForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" value="${user.username}" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" value="${user.email}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    `;
+    const editProfileForm = document.getElementById("editProfileForm");
+    if (editProfileForm) {
+      editProfileForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        saveProfile(formData);
+      });
+    } else {
+      console.error("Edit profile form not found.");
+    }
+  } else {
+    console.error("Profile container not found.");
+  }
+  
+}
+
+function saveProfile(formData) {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = formData.get("username");
+  const email = formData.get("email");
+  if (username.trim() === "" || email.trim() === "") {
+    alert("Please fill all fields!");
+    return;
+  }
+  user.username = username;
+  user.email = email;
+  localStorage.setItem("user", JSON.stringify(user));
+  getProfileInfo();
+}

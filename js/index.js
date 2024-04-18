@@ -475,4 +475,3 @@ if (toastTrigger) {
 
 // Call this function when the page loads to check if the user is logged in
 window.onload = showLoggedInUserInfo;
-
