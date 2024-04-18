@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
 // GET comments
 router.get('/', async (req, res) => {
     try {
-    const comments = await pool.query('SELECT * FROM comment');
+    const comments = await pool.query('SELECT * FROM comment order by saved asc');
     res.status(200).json(comments.rows);
         } catch (error) {
            console.log(error);

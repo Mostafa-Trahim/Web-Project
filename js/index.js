@@ -205,6 +205,7 @@ submitButton.addEventListener('click', () => {
         //append the comment to the comment box
         const commentBox = postElement.querySelector('.comment-box');
         commentBox.appendChild(commentElement);
+        
       })
       .catch((error) => {
         console.error('Error fetching user:', error);
