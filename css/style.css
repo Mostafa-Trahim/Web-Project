@@ -256,3 +256,8 @@
     margin-right: 5px;
     object-fit: contain;
   }
+
+  #testButton {
+    position: absolute;
+    right: 0;
+}
