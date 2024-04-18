@@ -100,6 +100,60 @@ const interestImages = {
 'Wholesome': '/img/icon9.jpg',
 };
 
+const getPosts = async () => {
+  try {
+    const response = await axios.get(`${BackendUrl}/posts`);
+    const posts = response.data;
+    console.log(posts);
+    const postsContainer = document.getElementById('postsContainer');
+    postsContainer.innerHTML = '';
+    posts.forEach(post => {
+      const postElement = document.createElement('div');
+      postElement.className = 'card mb-3 text-white';
+      postElement.style = 'background-color: #1d1d1d;';
+      const interestImage = interestImages[post.interest];
+      postElement.innerHTML = `
+        <div class="card-body">
+          <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}</p>
+          <h3 class="card-title">${post.title}</h5>
+          <img src=${post.url} class="card-img-top" alt="post">
+          <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
+            <i class="bi bi-arrow-up-square-fill"> Up</i>
+            <i class="bi bi-arrow-down-square-fill"> Down</i>
+            <i class="bi bi-chat-left-text"><span> Comment</span></i>
+            <i class="bi bi-share"> <span>Share</span></i>
+          </div>
+        </div>
+      `;
+      const icons = postElement.querySelectorAll('i');
+      icons.forEach(icon => {
+        icon.style.cursor = 'pointer';
+        icon.style.gap = '0.5rem';
+        icon.style.fontSize = '1.2rem';
+        icon.style.display = 'flex';
+        icon.style.alignItems = 'center';
+        icon.style.padding = '0.5rem';
+        icon.style.borderRadius = '0.5rem';
+        icon.onmouseover = function() {
+          icon.style.backgroundColor = 'whitesmoke';
+        };
+        icon.onmouseout = function() {
+          icon.style.backgroundColor = 'transparent';
+        };
+        icon.addEventListener('click', () => {
+          console.log('Icon clicked:', icon);
+        });
+      });
+      postsContainer.appendChild(postElement); // I will add btns to react
+    });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+  }
+};
+
+
+window.onload = getPosts();
+
 document.querySelectorAll('.Sidebar-Categories li').forEach(item => {
   item.addEventListener('click', function() {
       const category = this.querySelector('span').textContent;
@@ -332,6 +386,36 @@ if (toastTrigger) {
     toastBootstrap.show()
   })
 }
+
+ // profile information
+ const displayUserProfile = (userProfile) => {
+  const profileContainer = document.getElementById('profileContainer');
+  profileContainer.innerHTML = `
+    <div class="card mb-3 text-white">
+      <div class="card-body">
+        <h3 class="card-title">Profile Information</h3>
+        <p class="card-text">Username: ${userProfile.username}</p>
+        <p class="card-text">Email: ${userProfile.email}</p>
+        <p class="card-text">Interests: ${userProfile.interests.join(', ')}</p>
+      </div>
+    </div>
+  `;
+};
+
+const getUserProfile = async () => {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const response = await axios.get(`${BackendUrl}/users/${user.id}`);
+    const userProfile = response.data;
+    console.log(userProfile);
+    displayUserProfile(userProfile);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+  }
+};
+
+window.addEventListener('load', getUserProfile);
+
 
 // Call this function when the page loads to check if the user is logged in
 window.onload = showLoggedInUserInfo;
