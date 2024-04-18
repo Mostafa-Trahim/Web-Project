@@ -157,7 +157,9 @@
                       </div>
                       <!--Test button-->
                       <div>
-                      <button id="testBtn" class="btn btn-primary">Test</button>       
+                        <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#editPostModal" >Test</button>
+
+                      <!-- <button id="testBtn" class="btn btn-primary">Test</button>        -->
                       </div>         
                     </div>
 
@@ -278,6 +280,7 @@
                 </div>
             </div>
         </div>
+    </div>
     
     <!-- Login Confirmation Modal -->
     <div class="modal fade" id="LoginConfirmationModal" tabindex="-1" aria-labelledby="LoginConfirmationModalLabel" aria-hidden="true">
@@ -297,10 +300,11 @@
                 </div>
             </div>
         </div>
+    </div>
 
     <!-- Edit post modal -->
-    <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 150px; color: orange;">
+    <div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 150px; color: orange;">
           <div class="modal-content" style="background-color: #141414;">
               <div class="pt-16 pb-32">
                   <div class="container w-100 m-auto">
