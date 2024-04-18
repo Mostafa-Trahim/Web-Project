@@ -125,7 +125,7 @@ const getPosts = async () => {
           </div>
           <div class="comment-box" style="display: none;">
           <textarea class="form-control bg-dark text-light" id="comment" rows="1 placeholder="Add a comment..."></textarea>
-          <button class="btn btn-secondary mt-2">Submit</button>
+          <button class="btn btn-secondary mt-2" id="submit_button">Submit</button>
         </div>
         </div>
       `;
@@ -144,6 +144,44 @@ commentButton.addEventListener('click', () => {
     commentBox.style.display = 'none';
   }
 });
+
+
+// Find the submit button
+const submitButton = postElement.querySelector('#submit_button');
+// Add a click event listener to the submit button
+submitButton.addEventListener('click', () => {
+  
+  //alert("works") //test if the button works
+  
+  // Find the comment box
+  const commentBox = postElement.querySelector('.comment-box');
+  // Find the comment input
+  const commentInput = postElement.querySelector('#comment');
+  // Get the comment text
+  const commentText = commentInput.value;
+  // Get the post ID
+  const postId = post.id;
+  // Get the user ID
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user.id;
+  // use axios to post the comment
+  axios.post(`${BackendUrl}/comments`, {
+    comment_text: commentText,
+    post_id: postId,
+    user_id: userId
+  })
+  //alert the user that the comment was added successfully(can be made better with a toast message)
+  .then(() => alert('Comment added successfully!'))
+  // Clear the comment input
+  commentInput.value = '';
+    });
+
+
+
+
+
+
+
 
 
 
