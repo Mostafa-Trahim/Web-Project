@@ -164,83 +164,115 @@ const getPosts = async () => {
         console.log('Delete Post Icon clicked:', postId);
       });
 
-// Find the comment button
-const commentButton = postElement.querySelector('.bi-chat-left-text');
+  // Find the comment button
+  const commentButton = postElement.querySelector('.bi-chat-left-text');
 
-// Add a click event listener to the comment button
+  // Add a click event listener to the comment button
+  // Update the click event listener for comment buttons
 commentButton.addEventListener('click', () => {
-  // Find the comment box
+  const postElement = commentButton.closest('.card');
   const commentBox = postElement.querySelector('.comment-box');
-  
-  // Toggle the display of the comment box
+  toggleCommentBox(commentBox);
+});
+
+// Function to toggle comment box display
+function toggleCommentBox(commentBox) {
   if (commentBox.style.display === 'none') {
     commentBox.style.display = 'block';
   } else {
     commentBox.style.display = 'none';
   }
-});
+}
 
 
-// Find the submit button
-const submitButton = postElement.querySelector('#submit_button');
-// Add a click event listener to the submit button
-submitButton.addEventListener('click', () => {
-  //alert("works") //test if the button works
-  // Find the comment box
-  const commentBox = postElement.querySelector('.comment-box');
-  // Find the comment input
-  const commentInput = postElement.querySelector('#comment');
-  // Get the comment text
-  const commentText = commentInput.value;
-  // Get the post ID
-  const postId = post.id;
-  // Get the user ID
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user.id;
-  // use axios to post the comment
-  axios.post(`${BackendUrl}/comments`, {
-    comment_text: commentText,
-    post_id: postId,
-    user_id: userId
-  })
-  //alert the user that the comment was added successfully(can be made better with a toast message)
-  .then(() => alert('Comment added successfully!'))
-  // Clear the comment input
-  commentInput.value = '';
+  const submitButton = postElement.querySelector('#submit_button');
+
+  // Function to create a comment element
+  function createCommentElement(comment, user) {
+    const commentElement = document.createElement('div');
+    commentElement.className = 'card mb-3 text-white';
+    commentElement.style = 'background-color: #1d1d1d;';
+    // Set data-comment-id attribute to the comment element
+    commentElement.dataset.commentId = comment.id;
+    commentElement.innerHTML = `
+      <div class="card-body">
+        <h5 class="card-title">${user.username}</h5>
+        <div class="d-flex justify-content-between align-items-start"> 
+          <p class="card-text">${comment.comment_text}</p>
+          <i class="bi bi-trash-fill delete-comment" style="cursor:pointer"></i>
+        </div>
+      </div>`;
+    return commentElement;
+  }
+  
+  
+
+  // Add a click event listener to the submit button
+  submitButton.addEventListener('click', () => {
+    const postElement = submitButton.closest('.card');
+    const postId = postElement.dataset.postId; // Assuming you have a data attribute for post ID
+    createComment(postElement, postId);
+  });
+  
+  // Function to create a comment
+  function createComment(postElement, postId) {
+    const commentInput = postElement.querySelector('#comment');
+    const commentText = commentInput.value;
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user.id;
+  
+    axios.post(`${BackendUrl}/comments`, {
+      comment_text: commentText,
+      post_id: postId,
+      user_id: userId
+    })
+    .then((response) => {
+      alert('Comment added successfully!');
+      const comment = response.data;
+      const commentBox = postElement.querySelector('.comment-box');
+      const commentElement = createCommentElement(comment, user);
+      commentElement.dataset.commentId = comment.id;
+      commentBox.appendChild(commentElement);
+      commentInput.value = ''; // Clear the comment input
+    })
+    .catch((error) => {
+      console.error('Error posting comment:', error);
+      // Handle error if needed
     });
+  }
 
-  //put comments  from the database under the submit button
+  // Get comments from the database and display them
   axios.get(`${BackendUrl}/comments`)
-  .then((response) => {     
+  .then((response) => {
     const comments = response.data;
-    console.log(comments); // test if the comments are fetched
-   //get username by userid using axios
+    const commentBox = postElement.querySelector('.comment-box');
     comments.forEach(comment => {
       axios.get(`${BackendUrl}/comments/user/${comment.user_id}`)
       .then((response) => {
         const user = response.data;
-        console.log(user); // test if the user is fetched
-         // Create a div for each comment that should displayt the commenter name and the comment with bootstrap / only show when commetn box is open
-        const commentElement = document.createElement('div');
-        commentElement.className = 'card mb-3 text-white';
-        commentElement.style = 'background-color: #1d1d1d;';
-        //coment shold havae clear borders
-        commentElement.innerHTML = `
-          <div class="card-body">
-            <h5 class="card-title">${user.username}</h5>
-            <p class="card-text">${comment.comment_text}</p>
-          </div>  
-        `;
-        //append the comment to the comment box
-        const commentBox = postElement.querySelector('.comment-box');
+        const commentElement = createCommentElement(comment, user);
         commentBox.appendChild(commentElement);
-        
       })
       .catch((error) => {
         console.error('Error fetching user:', error);
       });
     });
   })
+  .catch((error) => {
+    console.error('Error fetching comments:', error);
+    // Handle error if needed
+  });
+
+  postElement.querySelector('.comment-box').addEventListener('click', (event) => {
+    const deleteIcon = event.target.closest('.bi-trash-fill');
+    if (deleteIcon) {
+      const commentElement = deleteIcon.closest('.card');
+      const commentId = commentElement.dataset.commentId; // Assuming you add data-comment-id attribute to the comment element
+      deleteComment(commentId);
+    }
+  });
+  
+
 
       const icons = postElement.querySelectorAll('.PostIcons i');
       icons.forEach(icon => {
@@ -297,6 +329,7 @@ submitButton.addEventListener('click', () => {
     console.error('Error fetching posts:', error);
   }
 };
+
 
 const upvotePost = async (postId) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -415,83 +448,113 @@ const DeletePostIcon = postElement.querySelector('#DeletePostIcon');
         console.log('Delete Post Icon clicked:', postId);
       });
 
+
 // Find the comment button
 const commentButton = postElement.querySelector('.bi-chat-left-text');
 
 // Add a click event listener to the comment button
 commentButton.addEventListener('click', () => {
-// Find the comment box
-const commentBox = postElement.querySelector('.comment-box');
-
-// Toggle the display of the comment box
-if (commentBox.style.display === 'none') {
-commentBox.style.display = 'block';
-} else {
-commentBox.style.display = 'none';
-}
-});
-
-
-// Find the submit button
-const submitButton = postElement.querySelector('#submit_button');
-// Add a click event listener to the submit button
-submitButton.addEventListener('click', () => {
-//alert("works") //test if the button works
-// Find the comment box
-const commentBox = postElement.querySelector('.comment-box');
-// Find the comment input
-const commentInput = postElement.querySelector('#comment');
-// Get the comment text
-const commentText = commentInput.value;
-// Get the post ID
-const postId = post.id;
-// Get the user ID
-const user = JSON.parse(localStorage.getItem("user"));
-const userId = user.id;
-// use axios to post the comment
-axios.post(`${BackendUrl}/comments`, {
-comment_text: commentText,
-post_id: postId,
-user_id: userId
-})
-//alert the user that the comment was added successfully(can be made better with a toast message)
-.then(() => alert('Comment added successfully!'))
-// Clear the comment input
-commentInput.value = '';
-});
-
-//put comments  from the database under the submit button
-axios.get(`${BackendUrl}/comments`)
-.then((response) => {     
-const comments = response.data;
-console.log(comments); // test if the comments are fetched
-//get username by userid using axios
-comments.forEach(comment => {
-axios.get(`${BackendUrl}/comments/user/${comment.user_id}`)
-.then((response) => {
-  const user = response.data;
-  console.log(user); // test if the user is fetched
-   // Create a div for each comment that should displayt the commenter name and the comment with bootstrap / only show when commetn box is open
-  const commentElement = document.createElement('div');
-  commentElement.className = 'card mb-3 text-white';
-  commentElement.style = 'background-color: #1d1d1d;';
-  //coment shold havae clear borders
-  commentElement.innerHTML = `
-    <div class="card-body">
-      <h5 class="card-title">${user.username}</h5>
-      <p class="card-text">${comment.comment_text}</p>
-    </div>  
-  `;
-  //append the comment to the comment box
+  // Find the comment box
   const commentBox = postElement.querySelector('.comment-box');
-  commentBox.appendChild(commentElement);
   
-})
-.catch((error) => {
-  console.error('Error fetching user:', error);
+  // Toggle the display of the comment box
+  if (commentBox.style.display === 'none') {
+    commentBox.style.display = 'block';
+  } else {
+    commentBox.style.display = 'none';
+  }
 });
-});
-})
+
+
+  const submitButton = postElement.querySelector('#submit_button');
+
+  // Function to create a comment element
+  function createCommentElement(comment, user) {
+    const commentElement = document.createElement('div');
+    commentElement.className = 'card mb-3 text-white';
+    commentElement.style = 'background-color: #1d1d1d;';
+    // Set data-comment-id attribute to the comment element
+    commentElement.dataset.commentId = comment.id;
+    commentElement.innerHTML = `
+      <div class="card-body">
+        <h5 class="card-title">${user.username}</h5>
+        <div class="d-flex justify-content-between align-items-start"> 
+          <p class="card-text">${comment.comment_text}</p>
+          <i class="bi bi-trash-fill delete-comment" style="cursor:pointer"></i>
+        </div>
+      </div>`;
+    return commentElement;
+  }
+  
+  
+
+  // Add a click event listener to the submit button
+  submitButton.addEventListener('click', () => {
+    const commentInput = postElement.querySelector('#comment');
+    const commentText = commentInput.value;
+    const postId = post.id;
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user.id;
+
+    axios.post(`${BackendUrl}/comments`, {
+      comment_text: commentText,
+      post_id: postId,
+      user_id: userId
+    })
+    .then((response) => {
+      alert('Comment added successfully!');
+      const comment = response.data;
+      const commentBox = postElement.querySelector('.comment-box');
+      axios.get(`${BackendUrl}/comments/user/${userId}`)
+        .then((response) => {
+          const user = response.data;
+          const commentElement = createCommentElement(comment, user);
+          commentElement.dataset.commentId = comment.id; // Set data-comment-id attribute
+          commentBox.appendChild(commentElement);
+
+          commentBox.appendChild(commentElement);
+        })
+        .catch((error) => {
+          console.error('Error fetching user:', error);
+        });
+      commentInput.value = ''; // Clear the comment input
+    })
+    .catch((error) => {
+      console.error('Error posting comment:', error);
+      // Handle error if needed
+    });
+  });
+
+  // Get comments from the database and display them
+  axios.get(`${BackendUrl}/comments`)
+  .then((response) => {
+    const comments = response.data;
+    const commentBox = postElement.querySelector('.comment-box');
+    comments.forEach(comment => {
+      axios.get(`${BackendUrl}/comments/user/${comment.user_id}`)
+      .then((response) => {
+        const user = response.data;
+        const commentElement = createCommentElement(comment, user);
+        commentBox.appendChild(commentElement);
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error);
+      });
+    });
+  })
+  .catch((error) => {
+    console.error('Error fetching comments:', error);
+    // Handle error if needed
+  });
+
+  postElement.querySelector('.comment-box').addEventListener('click', (event) => {
+    const deleteIcon = event.target.closest('.bi-trash-fill');
+    if (deleteIcon) {
+      const commentElement = deleteIcon.closest('.card');
+      const commentId = commentElement.dataset.commentId; // Assuming you add data-comment-id attribute to the comment element
+      deleteComment(commentId);
+    }
+  });
 
 const icons = postElement.querySelectorAll('.PostIcons i');
 icons.forEach(icon => {
@@ -603,6 +666,16 @@ const deletePost = async (postId) => {
     getPosts();
   } catch (error) {
     console.error('Error deleting post:', error);
+  }
+};
+
+const deleteComment = async (commentId) => {
+  try {
+    const res = await axios.delete(`${BackendUrl}/comments/${commentId}`);
+    console.log(res.data);
+    getPosts();
+  } catch (error) {
+    console.error('Error deleting comment:', error);
   }
 };
 
