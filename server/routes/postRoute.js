@@ -17,10 +17,10 @@ const pool = new Pool({
 
 router.get('/', async (req, res) => {
   const { category } = req.query;
-  let queryText = 'SELECT * FROM posts';
+  let queryText = 'SELECT * FROM posts ORDER BY posted DESC';
 
   if (category) {
-    queryText = `SELECT * FROM posts WHERE interest = $1`;
+    queryText = `SELECT * FROM posts WHERE interest = $1 ORDER BY posted DESC`;
   }
 
   try {

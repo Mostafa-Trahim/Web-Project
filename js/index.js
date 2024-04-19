@@ -378,8 +378,8 @@ const displayFilteredPosts = (posts) => {
     <div class="col-auto dropdown">
         <i class="bi bi-three-dots-vertical dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></i>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil"></i> Edit</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash"></i> Delete</a></li>
+            <li><a class="dropdown-item" href=""> <i class="bi bi-pencil"></i> Edit</a></li>
+            <li><a class="dropdown-item" href="" id="DeletePostIcon"> <i class="bi bi-trash"></i> Delete</a></li>
         </ul>
     </div>
   </div>
