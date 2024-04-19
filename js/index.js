@@ -406,6 +406,15 @@ dropdownMenuButton.style.alignItems = 'center';
 dropdownMenuButton.style.padding = '0.5rem';
 dropdownMenuButton.style.borderRadius = '0.5rem';
 
+const DeletePostIcon = postElement.querySelector('#DeletePostIcon');
+
+      DeletePostIcon.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent the default button click behavior
+        const postId = post.id;
+        deletePost(postId);
+        console.log('Delete Post Icon clicked:', postId);
+      });
+
 // Find the comment button
 const commentButton = postElement.querySelector('.bi-chat-left-text');
 
