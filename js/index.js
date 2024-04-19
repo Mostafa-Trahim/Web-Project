@@ -114,11 +114,24 @@ const getPosts = async () => {
       const interestImage = interestImages[post.interest];
       postElement.innerHTML = `
         <div class="card-body">
-          <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}<div id="testButton" class="btn-group" role="group" aria-label="Basic example">
-          <button id="deletePostButton" class="btn btn-warning text-black">Delete</button>
-          <button id="editPostbutton" class="btn btn-warning text-black">Edit</button>
-        </div></p>
-          <h3 class="card-title">${post.title}</h5>
+          <p class="card-text">
+            <img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" /> 
+            <span style="font-weight: bold">${post.interest} </span> 
+            <span style="font-size: 0.75rem; line-height: 1rem; margin-left:10px "> posted ${new Date(post.posted).toLocaleDateString()}</span> 
+          </p>
+          
+          <div class="row">
+            <div class="col">
+                <h3 class="card-title">${post.title}</h3>
+            </div>
+            <div class="col-auto dropdown">
+                <i class="bi bi-three-dots-vertical dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="" id="EditPostIcon"> <i class="bi bi-pencil"></i> Edit</a></li>
+                    <li><a class="dropdown-item" href="" id="DeletePostIcon"> <i class="bi bi-trash"></i> Delete</a></li>
+                </ul>
+            </div>
+          </div>
           <img src=${post.url} class="card-img-top" alt="post">
           <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
             <i class="bi bi-arrow-up-square-fill" id="UpIcon"> Up</i>
@@ -133,7 +146,14 @@ const getPosts = async () => {
         </div>
       `;
 
-
+      const dropdownMenuButton = postElement.querySelector('.dropdown i');
+      dropdownMenuButton.style.cursor = 'pointer';
+      dropdownMenuButton.style.gap = '0.5rem';
+      dropdownMenuButton.style.fontSize = '1.2rem';
+      dropdownMenuButton.style.display = 'flex';
+      dropdownMenuButton.style.alignItems = 'center';
+      dropdownMenuButton.style.padding = '0.5rem';
+      dropdownMenuButton.style.borderRadius = '0.5rem';
 
 // Find the comment button
 const commentButton = postElement.querySelector('.bi-chat-left-text');
@@ -213,7 +233,7 @@ submitButton.addEventListener('click', () => {
     });
   })
 
-      const icons = postElement.querySelectorAll('i');
+      const icons = postElement.querySelectorAll('.PostIcons i');
       icons.forEach(icon => {
         icon.style.cursor = 'pointer';
         icon.style.gap = '0.5rem';
@@ -337,11 +357,23 @@ const displayFilteredPosts = (posts) => {
     const interestImage = interestImages[post.interest];
     postElement.innerHTML = `
     <div class="card-body">
-    <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}<div id="testButton" class="btn-group" role="group" aria-label="Basic example">
-    <button id="deletePostButton" class="btn btn-warning text-black">Delete</button>
-    <button id="editPostbutton" class="btn btn-warning text-black">Edit</button>
-  </div></p>
-    <h3 class="card-title">${post.title}</h5>
+    <p class="card-text">
+      <img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" /> 
+      <span style="font-weight: bold">${post.interest} </span> 
+      <span style="font-size: 0.75rem; line-height: 1rem; margin-left:10px "> posted ${new Date(post.posted).toLocaleDateString()}</span> 
+    </p>
+    <div class="row">
+    <div class="col">
+        <h3 class="card-title">${post.title}</h3>
+    </div>
+    <div class="col-auto dropdown">
+        <i class="bi bi-three-dots-vertical dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></i>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil"></i> Edit</a></li>
+            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash"></i> Delete</a></li>
+        </ul>
+    </div>
+  </div>
     <img src=${post.url} class="card-img-top" alt="post">
     <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
       <i class="bi bi-arrow-up-square-fill" id="UpIcon"> Up</i>
@@ -356,7 +388,14 @@ const displayFilteredPosts = (posts) => {
   </div>
 `;
 
-
+const dropdownMenuButton = postElement.querySelector('.dropdown i');
+dropdownMenuButton.style.cursor = 'pointer';
+dropdownMenuButton.style.gap = '0.5rem';
+dropdownMenuButton.style.fontSize = '1.2rem';
+dropdownMenuButton.style.display = 'flex';
+dropdownMenuButton.style.alignItems = 'center';
+dropdownMenuButton.style.padding = '0.5rem';
+dropdownMenuButton.style.borderRadius = '0.5rem';
 
 // Find the comment button
 const commentButton = postElement.querySelector('.bi-chat-left-text');
@@ -436,7 +475,7 @@ axios.get(`${BackendUrl}/comments/user/${comment.user_id}`)
 });
 })
 
-const icons = postElement.querySelectorAll('i');
+const icons = postElement.querySelectorAll('.PostIcons i');
 icons.forEach(icon => {
   icon.style.cursor = 'pointer';
   icon.style.gap = '0.5rem';
@@ -537,6 +576,35 @@ const createPost = async (formData) => {
   }
 }
 
+// Delete a post function
+
+const deletePost = async (postId) => {
+  try {
+    const res = await axios.delete(`${BackendUrl}/posts/${postId}`);
+    console.log(res.data);
+    getPosts();
+  } catch (error) {
+    console.error('Error deleting post:', error);
+  }
+};
+
+// Edit a post function
+// const editPost = async (postId) => {
+//   try {
+//     const res = await axios.put(`${BackendUrl}/posts/${postId}`);
+//     console.log(res.data);
+//     getPosts();
+//   } catch (error) {
+//     console.error('Error editing post:', error);
+//   }
+// };
+
+document.getElementById('DeletePostIcon').addEventListener('click', function(e) {
+  e.preventDefault(); // Prevent the default button click behavior
+  const postId = post.id;
+  deletePost(postId);
+});
+
 
 document.getElementById('createPostForm').addEventListener('submit', function(e) {
   e.preventDefault(); // Prevent the default form submission behavior
@@ -549,9 +617,6 @@ document.getElementById('createNewPostBtn').addEventListener('click', function(e
   const formData = new FormData(document.getElementById('createPostForm'));
   createPost(formData);
 });
-
-
-
 
 document.getElementById('registerForm').addEventListener('submit', function(e) {
   e.preventDefault(); // Prevent the default form submission behavior

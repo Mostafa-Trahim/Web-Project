@@ -57,7 +57,38 @@ router.post('/create', async (req, res) => {
   }
 });
 
-// routes/postRoute.js
+// modify a post 
+router.put('/:postId', async (req, res) => {
+  const postId = req.params.postId;
+  const { title, url, interest } = req.body;
+
+  try {
+    const updatedPost = await pool.query(
+      'UPDATE posts SET title = $1, url = $2, interest = $3 WHERE id = $4 RETURNING *',
+      [title, url, interest, postId]
+    );
+
+    res.status(200).json(updatedPost.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to update post' });
+  }
+});
+
+// Delete a post
+router.delete('/:postId', async (req, res) => {
+  const postId = req.params.postId;
+
+  try {
+    await pool.query('DELETE FROM posts WHERE id = $1', [postId]);
+
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete post' });
+  }
+});
+
 
 // Upvote a post
 router.get('/:postId', async (req, res) => {
@@ -86,79 +117,6 @@ router.get('/:postId/upvote', async (req, res) => {
   }
 
 });
-
-// Upvote a post
-// router.post('/:postId/upvote', async (req, res) => {
-//   const { postId } = req.params;
-//   const { userId } = req.body; // Assuming userId is sent in the request body
-
-//   try {
-//     // Check if the user has already upvoted the post
-//     const existingVote = await pool.query(
-//       'SELECT * FROM votes WHERE user_id = $1 AND post_id = $2 AND vote_type = $3',
-//       [userId, postId, 'upvote']
-//     );
-
-//     if (existingVote.rows.length > 0) {
-//       // User has already upvoted the post
-//       return res.status(400).json({ message: 'You have already upvoted this post' });
-//     }
-
-//     // Insert the upvote into the votes table
-//     await pool.query(
-//       'INSERT INTO votes (user_id, post_id, vote_type) VALUES ($1, $2, $3)',
-//       [userId, postId, 'upvote']
-//     );
-
-//     // Increment the upvotes count in the posts table
-//     await pool.query(
-//       'UPDATE posts SET upvotes = upvotes + 1 WHERE id = $1',
-//       [postId]
-//     );
-
-//     res.status(200).json({ message: 'Post upvoted successfully' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Failed to upvote post' });
-//   }
-// });
-
-// // Downvote a post
-// router.post('/:postId/downvote', async (req, res) => {
-//   const { postId } = req.params;
-//   const { userId } = req.body; // Assuming userId is sent in the request body
-
-//   try {
-//     // Check if the user has already downvoted the post
-//     const existingVote = await pool.query(
-//       'SELECT * FROM votes WHERE user_id = $1 AND post_id = $2 AND vote_type = $3',
-//       [userId, postId, 'downvote']
-//     );
-
-//     if (existingVote.rows.length > 0) {
-//       // User has already downvoted the post
-//       return res.status(400).json({ message: 'You have already downvoted this post' });
-//     }
-
-//     // Insert the downvote into the votes table
-//     await pool.query(
-//       'INSERT INTO votes (user_id, post_id, vote_type) VALUES ($1, $2, $3)',
-//       [userId, postId, 'downvote']
-//     );
-
-//     // Increment the downvotes count in the posts table
-//     await pool.query(
-//       'UPDATE posts SET downvotes = downvotes + 1 WHERE id = $1',
-//       [postId]
-//     );
-
-//     res.status(200).json({ message: 'Post downvoted successfully' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Failed to downvote post' });
-//   }
-// });
-
 
 // Upvote a post
 router.post('/:postId/upvote', async (req, res) => {
