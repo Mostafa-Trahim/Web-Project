@@ -213,16 +213,6 @@ submitButton.addEventListener('click', () => {
     });
   })
 
-  
-
-       
-       
-
-
-
-
-
-
       const icons = postElement.querySelectorAll('i');
       icons.forEach(icon => {
         icon.style.cursor = 'pointer';
@@ -249,12 +239,20 @@ submitButton.addEventListener('click', () => {
           if (icon.id === 'UpIcon') {
             console.log('Up Icon clicked:', icon);
             upvotePost(post.id);
+            if (icon.style.color === 'green') {
+              icon.style.color = 'gray';
+            } else {
             icon.style.color = 'green';
+            }
           }
           if (icon.id === 'DownIcon') {
             console.log('Down Icon clicked:', icon);
             downvotePost(post.id);
+            if (icon.style.color === 'red') {
+              icon.style.color = 'gray';
+            } else {
             icon.style.color = 'red';
+            }
           }
           if (icon.id === 'CommentIcon') {
             console.log('Comment Icon clicked:', icon);
@@ -338,40 +336,159 @@ const displayFilteredPosts = (posts) => {
     postElement.style = 'background-color: #1d1d1d;';
     const interestImage = interestImages[post.interest];
     postElement.innerHTML = `
-      <div class="card-body">
-        <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}</p>
-        <h3 class="card-title">${post.title}</h5>
-        <img src=${post.url} class="card-img-top" alt="post">
-        <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
-          <i class="bi bi-arrow-up-square-fill" id="UpIcon"> Up</i>
-          <i class="bi bi-arrow-down-square-fill" id="DownIcon"> Down</i>
-          <i class="bi bi-chat-left-text" id="CommentIcon"><span> Comment</span></i>
-          <i class="bi bi-share"> <span>Share</span></i>
-        </div>
-      </div>
-    `;
-    const icons = postElement.querySelectorAll('i');
-    icons.forEach(icon => {
-      icon.style.cursor = 'pointer';
-      icon.style.gap = '0.5rem';
-      icon.style.fontSize = '1.2rem';
-      icon.style.display = 'flex';
-      icon.style.alignItems = 'center';
-      icon.style.padding = '0.5rem';
-      icon.style.borderRadius = '0.5rem';
-      icon.onmouseover = function() {
-        icon.style.backgroundColor = 'whitesmoke';
-      };
-      icon.onmouseout = function() {
-        icon.style.backgroundColor = 'transparent';
-      };
-      icon.addEventListener('click', () => {
-        console.log('Icon clicked:', icon);
-      });
-    });
-    postsContainer.appendChild(postElement); // I will add btns to react
+    <div class="card-body">
+    <p class="card-text"><img src="${interestImage}" alt="${post.interest} Logo" id="InterestLogoImg" class="interest-image" />${post.interest}<div id="testButton" class="btn-group" role="group" aria-label="Basic example">
+    <button id="deletePostButton" class="btn btn-warning text-black">Delete</button>
+    <button id="editPostbutton" class="btn btn-warning text-black">Edit</button>
+  </div></p>
+    <h3 class="card-title">${post.title}</h5>
+    <img src=${post.url} class="card-img-top" alt="post">
+    <div class="PostIcons d-flex gap-5 m-2 p-2 text-secondary" id="PostIcons"> 
+      <i class="bi bi-arrow-up-square-fill" id="UpIcon"> Up</i>
+      <i class="bi bi-arrow-down-square-fill" id="DownIcon"> Down</i>
+      <i class="bi bi-chat-left-text" id="CommentIcon"><span> Comment</span></i>
+      <i class="bi bi-share" id="ShareIcon"> <span>Share</span></i>
+    </div>
+    <div class="comment-box" style="display: none;">
+    <textarea class="form-control bg-dark text-light" id="comment" rows="1 placeholder="Add a comment..."></textarea>
+    <button class="btn btn-secondary mt-2" id="submit_button">Submit</button>
+  </div>
+  </div>
+`;
+
+
+
+// Find the comment button
+const commentButton = postElement.querySelector('.bi-chat-left-text');
+
+// Add a click event listener to the comment button
+commentButton.addEventListener('click', () => {
+// Find the comment box
+const commentBox = postElement.querySelector('.comment-box');
+
+// Toggle the display of the comment box
+if (commentBox.style.display === 'none') {
+commentBox.style.display = 'block';
+} else {
+commentBox.style.display = 'none';
+}
+});
+
+
+// Find the submit button
+const submitButton = postElement.querySelector('#submit_button');
+// Add a click event listener to the submit button
+submitButton.addEventListener('click', () => {
+//alert("works") //test if the button works
+// Find the comment box
+const commentBox = postElement.querySelector('.comment-box');
+// Find the comment input
+const commentInput = postElement.querySelector('#comment');
+// Get the comment text
+const commentText = commentInput.value;
+// Get the post ID
+const postId = post.id;
+// Get the user ID
+const user = JSON.parse(localStorage.getItem("user"));
+const userId = user.id;
+// use axios to post the comment
+axios.post(`${BackendUrl}/comments`, {
+comment_text: commentText,
+post_id: postId,
+user_id: userId
+})
+//alert the user that the comment was added successfully(can be made better with a toast message)
+.then(() => alert('Comment added successfully!'))
+// Clear the comment input
+commentInput.value = '';
+});
+
+//put comments  from the database under the submit button
+axios.get(`${BackendUrl}/comments`)
+.then((response) => {     
+const comments = response.data;
+console.log(comments); // test if the comments are fetched
+//get username by userid using axios
+comments.forEach(comment => {
+axios.get(`${BackendUrl}/comments/user/${comment.user_id}`)
+.then((response) => {
+  const user = response.data;
+  console.log(user); // test if the user is fetched
+   // Create a div for each comment that should displayt the commenter name and the comment with bootstrap / only show when commetn box is open
+  const commentElement = document.createElement('div');
+  commentElement.className = 'card mb-3 text-white';
+  commentElement.style = 'background-color: #1d1d1d;';
+  //coment shold havae clear borders
+  commentElement.innerHTML = `
+    <div class="card-body">
+      <h5 class="card-title">${user.username}</h5>
+      <p class="card-text">${comment.comment_text}</p>
+    </div>  
+  `;
+  //append the comment to the comment box
+  const commentBox = postElement.querySelector('.comment-box');
+  commentBox.appendChild(commentElement);
+  
+})
+.catch((error) => {
+  console.error('Error fetching user:', error);
+});
+});
+})
+
+const icons = postElement.querySelectorAll('i');
+icons.forEach(icon => {
+  icon.style.cursor = 'pointer';
+  icon.style.gap = '0.5rem';
+  icon.style.fontSize = '1.2rem';
+  icon.style.display = 'flex';
+  icon.style.alignItems = 'center';
+  icon.style.padding = '0.5rem';
+  icon.style.borderRadius = '0.5rem';
+  icon.onmouseover = function() {
+    icon.style.backgroundColor = 'whitesmoke';
+  };
+  icon.onmouseout = function() {
+    icon.style.backgroundColor = 'transparent';
+  };
+  icon.addEventListener('click', () => {
+
+    if (!localStorage.getItem("user")) {
+      alert("You must be logged in to interact with posts!");
+      return;
+    }
+    // for each to see which icon is clicked and do the action depending on the icon
+
+    if (icon.id === 'UpIcon') {
+      console.log('Up Icon clicked:', icon);
+      upvotePost(post.id);
+      if (icon.style.color === 'green') {
+        icon.style.color = 'gray';
+      } else {
+      icon.style.color = 'green';
+      }
+    }
+    if (icon.id === 'DownIcon') {
+      console.log('Down Icon clicked:', icon);
+      downvotePost(post.id);
+      if (icon.style.color === 'red') {
+        icon.style.color = 'gray';
+      } else {
+      icon.style.color = 'red';
+      }
+    }
+    if (icon.id === 'CommentIcon') {
+      console.log('Comment Icon clicked:', icon);
+    }
+    if (icon.id === 'ShareIcon') {
+      console.log('Share Icon clicked:', icon);
+    }
   });
+});
+postsContainer.appendChild(postElement); // I will add btns to react
+});
 };
+
 
 // Creating a post using the form
 
