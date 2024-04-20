@@ -80,6 +80,13 @@ router.delete('/:postId', async (req, res) => {
   const postId = req.params.postId;
 
   try {
+    // Delete associated comments
+    await pool.query('DELETE FROM comment WHERE post_id = $1', [postId]);
+
+    // Delete associated votes
+    await pool.query('DELETE FROM votes WHERE post_id = $1', [postId]);
+
+    // Delete the post
     await pool.query('DELETE FROM posts WHERE id = $1', [postId]);
 
     res.status(200).json({ message: 'Post deleted successfully' });
