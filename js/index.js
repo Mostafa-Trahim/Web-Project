@@ -319,8 +319,6 @@ function toggleCommentBox(commentBox) {
       // Handle error if needed
     });
   }
-  
-
   // Get comments from the database and display them
 
   const postId = post.id;
@@ -355,8 +353,6 @@ function toggleCommentBox(commentBox) {
     }
   });
   
-
-
       const icons = postElement.querySelectorAll('.PostIcons i');
       icons.forEach(icon => {
         icon.style.cursor = 'pointer';
@@ -844,25 +840,6 @@ const deleteComment = async (commentId) => {
     console.error('Error deleting comment:', error);
   }
 };
-
-// Edit a post function
-// const editPost = async (postId) => {
-//   try {
-//     const res = await axios.put(`${BackendUrl}/posts/${postId}`);
-//     console.log(res.data);
-//     getPosts();
-//   } catch (error) {
-//     console.error('Error editing post:', error);
-//   }
-// };
-
-// document.getElementById('DeletePostIcon').addEventListener('click', function(e) {
-//   e.preventDefault(); // Prevent the default button click behavior
-//   const postId = post.id;
-//   deletePost(postId);
-//   console.log('Delete Post Icon clicked:', postId);
-// });
-
 
 document.getElementById('createPostForm').addEventListener('submit', function(e) {
   e.preventDefault(); // Prevent the default form submission behavior
