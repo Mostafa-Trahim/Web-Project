@@ -145,6 +145,86 @@ const getPosts = async () => {
         </div>
         </div>
       `;
+      // Add an event listener to the EditPostIcon
+        const EditPostIcon = postElement.querySelector('#EditPostIcon');
+
+        EditPostIcon.addEventListener('click', function(e) {
+          e.preventDefault(); 
+          
+          // Check if the user is the owner of the post
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+
+          if (post.user_id !== Number(currentUser.id)) {
+            alert('You are not authorized to edit this post!');
+            return;
+          }
+          
+          // Enable editing for title, image, and interest
+          const titleElement = postElement.querySelector('.card-title');
+          const imageElement = postElement.querySelector('.card-img-top');
+          const interestElement = postElement.querySelector('.interest-image');
+        
+          // Allow user to edit the title
+          titleElement.contentEditable = true;
+          titleElement.style.borderRadius = '0.3rem';
+          titleElement.style.border = '1px solid #D8D8D8'; 
+          
+          // Add a dropdown menu for interest selection
+          // Populate the dropdown with the available interests
+          const interestSelect = document.createElement('select');
+          interestSelect.classList.add('form-select');
+          for (const interest in interestImages) {
+            const option = document.createElement('option');
+            option.textContent = interest;
+            option.value = interest;
+            interestSelect.appendChild(option);
+          }
+          interestSelect.style.width = '30%'
+          interestSelect.value = post.interest; // Set the initial value to the current interest
+          interestElement.replaceWith(interestSelect);
+        
+          // Allow user to change the image source
+          
+          const imageInput = document.createElement('input');
+          imageInput.type = 'text';
+          imageInput.classList.add('form-control');
+          imageInput.value = imageElement.src;
+          imageInput.style.marginTop = '0.5rem';
+          // imageElement.replaceWith(imageInput);
+          // just add image input under the image itself 
+          imageElement.insertAdjacentElement('afterend', imageInput);
+        
+          // Add a save button to save the changes
+          const saveButton = document.createElement('button');
+          saveButton.textContent = 'Save';
+          saveButton.classList.add('btn', 'btn-primary', 'mt-2');
+          
+          saveButton.addEventListener('click', function() {
+            // Save the changes to the backend
+            const updatedPost = {
+              title: titleElement.textContent,
+              url: imageInput.value,
+              interest: interestSelect.value
+            };
+        
+            // Make a PUT request to update the post
+            axios.put(`${BackendUrl}/posts/${post.id}`, updatedPost)
+              .then((response) => {
+                // Handle success
+                console.log('Post updated successfully:', response.data);
+                // Optionally, disable editing mode after saving
+                titleElement.contentEditable = false;
+                titleElement.style.border = 'none';
+                interestSelect.replaceWith(interestElement);
+                imageInput.replaceWith(imageElement); 
+                getPosts()
+              })
+              .catch((error) => {
+                console.error('Error updating post:', error);
+              });
+          });
+          postElement.appendChild(saveButton);
+        });
 
       const dropdownMenuButton = postElement.querySelector('.dropdown i');
       dropdownMenuButton.style.cursor = 'pointer';
@@ -417,7 +497,7 @@ const displayFilteredPosts = (posts) => {
     <div class="col-auto dropdown">
         <i class="bi bi-three-dots-vertical dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></i>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href=""> <i class="bi bi-pencil"></i> Edit</a></li>
+            <li><a class="dropdown-item" href="" id="EditPostIcon"> <i class="bi bi-pencil"></i> Edit</a></li>
             <li><a class="dropdown-item" href="" id="DeletePostIcon"> <i class="bi bi-trash"></i> Delete</a></li>
         </ul>
     </div>
@@ -436,14 +516,95 @@ const displayFilteredPosts = (posts) => {
   </div>
 `;
 
-const dropdownMenuButton = postElement.querySelector('.dropdown i');
-dropdownMenuButton.style.cursor = 'pointer';
-dropdownMenuButton.style.gap = '0.5rem';
-dropdownMenuButton.style.fontSize = '1.2rem';
-dropdownMenuButton.style.display = 'flex';
-dropdownMenuButton.style.alignItems = 'center';
-dropdownMenuButton.style.padding = '0.5rem';
-dropdownMenuButton.style.borderRadius = '0.5rem';
+// Add an event listener to the EditPostIcon
+const EditPostIcon = postElement.querySelector('#EditPostIcon');
+
+EditPostIcon.addEventListener('click', function(e) {
+  e.preventDefault(); 
+  
+  // Check if the user is the owner of the post
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  if (post.user_id !== Number(currentUser.id)) {
+    alert('You are not authorized to edit this post!');
+    return;
+  }
+  
+  // Enable editing for title, image, and interest
+  const titleElement = postElement.querySelector('.card-title');
+  const imageElement = postElement.querySelector('.card-img-top');
+  const interestElement = postElement.querySelector('.interest-image');
+
+  // Allow user to edit the title
+  titleElement.contentEditable = true;
+  titleElement.style.borderRadius = '0.3rem';
+  titleElement.style.border = '1px solid #D8D8D8'; 
+  
+  // Add a dropdown menu for interest selection
+  // Populate the dropdown with the available interests
+  const interestSelect = document.createElement('select');
+  interestSelect.classList.add('form-select');
+  for (const interest in interestImages) {
+    const option = document.createElement('option');
+    option.textContent = interest;
+    option.value = interest;
+    interestSelect.appendChild(option);
+  }
+  interestSelect.style.width = '30%'
+  interestSelect.value = post.interest; // Set the initial value to the current interest
+  interestElement.replaceWith(interestSelect);
+
+  // Allow user to change the image source
+  
+  const imageInput = document.createElement('input');
+  imageInput.type = 'text';
+  imageInput.classList.add('form-control');
+  imageInput.value = imageElement.src;
+  imageInput.style.marginTop = '0.5rem';
+  // imageElement.replaceWith(imageInput);
+  // just add image input under the image itself 
+  imageElement.insertAdjacentElement('afterend', imageInput);
+
+  // Add a save button to save the changes
+  const saveButton = document.createElement('button');
+  saveButton.textContent = 'Save';
+  saveButton.classList.add('btn', 'btn-primary', 'mt-2');
+  
+  saveButton.addEventListener('click', function() {
+    // Save the changes to the backend
+    const updatedPost = {
+      title: titleElement.textContent,
+      url: imageInput.value,
+      interest: interestSelect.value
+    };
+
+    // Make a PUT request to update the post
+    axios.put(`${BackendUrl}/posts/${post.id}`, updatedPost)
+      .then((response) => {
+        // Handle success
+        console.log('Post updated successfully:', response.data);
+        // Optionally, disable editing mode after saving
+        titleElement.contentEditable = false;
+        titleElement.style.border = 'none';
+        interestSelect.replaceWith(interestElement);
+        imageInput.replaceWith(imageElement); 
+        getPosts()
+      })
+      .catch((error) => {
+        console.error('Error updating post:', error);
+      });
+  });
+  postElement.appendChild(saveButton);
+});
+
+  const dropdownMenuButton = postElement.querySelector('.dropdown i');
+  dropdownMenuButton.style.cursor = 'pointer';
+  dropdownMenuButton.style.gap = '0.5rem';
+  dropdownMenuButton.style.fontSize = '1.2rem';
+  dropdownMenuButton.style.display = 'flex';
+  dropdownMenuButton.style.alignItems = 'center';
+  dropdownMenuButton.style.padding = '0.5rem';
+  dropdownMenuButton.style.borderRadius = '0.5rem';
 
 const DeletePostIcon = postElement.querySelector('#DeletePostIcon');
 
