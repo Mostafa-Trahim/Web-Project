@@ -139,10 +139,12 @@ const getPosts = async () => {
             <i class="bi bi-chat-left-text" id="CommentIcon"><span> Comment</span></i>
             <i class="bi bi-share" id="ShareIcon"> <span>Share</span></i>
           </div>
-          <div class="comment-box" style="display: none;">
-          <textarea class="form-control bg-dark text-light" id="comment" rows="1 placeholder="Add a comment..."></textarea>
-          <button class="btn btn-secondary mt-2" id="submit_button">Submit</button>
-        </div>
+          <div class="comment-box" style="display: none; padding-top: 10px;">
+            <div style="display: flex;">
+                <textarea class="form-control bg-dark text-light" id="comment" rows="1" style="flex: 1;" placeholder="Add a comment..."></textarea>
+                <button class="btn btn-secondary" id="submit_button" style="margin-left: 10px; background-color: transparent;">Comment</button>
+            </div>
+          </div>
         </div>
       `;
       // Add an event listener to the EditPostIcon
@@ -284,14 +286,9 @@ function toggleCommentBox(commentBox) {
       </div>`;
     return commentElement;
   }
-  
-  
-
   // Add a click event listener to the submit button
   submitButton.addEventListener('click', () => {
     const postElement = submitButton.closest('.card');
-    const postId = postElement.dataset.postId; // Assuming you have a data attribute for post ID
-    // createComment(postElement, postId);
     createComment(postElement, post.id);
 
   });
@@ -509,10 +506,12 @@ const displayFilteredPosts = (posts) => {
       <i class="bi bi-chat-left-text" id="CommentIcon"><span> Comment</span></i>
       <i class="bi bi-share" id="ShareIcon"> <span>Share</span></i>
     </div>
-    <div class="comment-box" style="display: none;">
-    <textarea class="form-control bg-dark text-light" id="comment" rows="1 placeholder="Add a comment..."></textarea>
-    <button class="btn btn-secondary mt-2" id="submit_button">Submit</button>
-  </div>
+    <div class="comment-box" style="display: none; padding-top: 10px;">
+      <div style="display: flex;">
+          <textarea class="form-control bg-dark text-light" id="comment" rows="1" style="flex: 1;" placeholder="Add a comment..."></textarea>
+          <button class="btn btn-secondary" id="submit_button" style="margin-left: 10px; background-color: transparent;">Comment</button>
+      </div>
+    </div>
   </div>
 `;
 
