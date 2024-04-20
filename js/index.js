@@ -211,11 +211,13 @@ function toggleCommentBox(commentBox) {
   submitButton.addEventListener('click', () => {
     const postElement = submitButton.closest('.card');
     const postId = postElement.dataset.postId; // Assuming you have a data attribute for post ID
-    createComment(postElement, postId);
+    // createComment(postElement, postId);
+    createComment(postElement, post.id);
+
   });
   
   // Function to create a comment
-  function createComment(postElement, postId) {
+  function createComment(postElement, postId, comment) {
     const commentInput = postElement.querySelector('#comment');
     const commentText = commentInput.value;
     const user = JSON.parse(localStorage.getItem("user"));
@@ -240,9 +242,13 @@ function toggleCommentBox(commentBox) {
       // Handle error if needed
     });
   }
+  
 
   // Get comments from the database and display them
-  axios.get(`${BackendUrl}/comments`)
+
+  const postId = post.id;
+  axios.get(`${BackendUrl}/comments/post/${postId}`)
+
   .then((response) => {
     const comments = response.data;
     const commentBox = postElement.querySelector('.comment-box');

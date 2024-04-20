@@ -40,6 +40,19 @@ router.get('/', async (req, res) => {
             res.status(500).json({ message: 'Failed to fetch comments' });
     } 
 });
+
+// GET comments for a specific post
+router.get('/post/:postId', async (req, res) => {
+    const postId = req.params.postId;
+    try {
+      const comments = await pool.query('SELECT * FROM comment WHERE post_id = $1 ORDER BY saved ASC', [postId]);
+      res.status(200).json(comments.rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to fetch comments' });
+    }
+  });
+  
     
 //get user name by id
 router.get('/user/:id', async (req, res) => {
