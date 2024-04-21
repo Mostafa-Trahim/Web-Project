@@ -261,3 +261,20 @@
     position: absolute;
     right: 0;
 }
+
+#rpCont {
+    padding: 75px;
+}
+
+.reportBtn {
+    background-color: rgb(255, 184, 30); /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 7px 12px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  .reportBtn:hover {
+    background-color: rgb(225, 116, 65);
+  }

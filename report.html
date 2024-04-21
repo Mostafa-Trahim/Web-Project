@@ -19,12 +19,9 @@
                             <a href="/"><img src="./img/logo1.png" alt="logo"></a>
                             <nav class="Navbar">
                                 <ul class="list-inline">
-                                    <li></li>
                                     <li class="list-inline-item" id="shuffleButton">🔀 Shuffle</li>
-                                    <!-- <li class="list-inline-item">🏴‍☠️ Memeland</li>  -->
-                                    <!-- Maybe we will add a new separate page -->
-                                    <!-- <li class="list-inline-item">💫 Vibes</li> -->
-                                    <!-- Maybe we will add a new separate page -->
+                                    <li class="list-inline-item">🏴‍☠️ Memeland</li>
+                                    <li class="list-inline-item">💫 Vibes</li>
                                 </ul>
                             </nav>
                         </div>
@@ -38,7 +35,6 @@
                     <div class="col-md-3">
                         <div class="Header-right">
                             <div class="Header-icons">
-                                <button class="reportBtn" onclick="location.href = 'report.html';" title="Report"><i class="fa fa-gavel" aria-hidden="true"></i></button>
                                 <button class="btn btn-outline-primary me-2" id="HeaderLoginBtn" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
                                 <button class="btn btn-primary" type="button" id="HeadeRegisterBtn" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</button>
                                 <button class="btn btn-warning text-white" id="CreatePostBtn" data-bs-toggle="modal" data-bs-target="#CreatePostModal" >
@@ -61,109 +57,49 @@
                             <a href="#" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#RegisterModal">Sign Up</a>
                         </div>
                     </div>
-        
-                    <div class="Sidebar-Categories">
-                        <h2>Interests</h2>
-                        <ul>
-                            <li>
-                                <img src="img/icon1.jpg" alt="logo" />
-                                <span>Anime & Manga</span>
-                            </li>
-                            <li>
-                                <img src="img/icon2.jpg" alt="logo" />
-                                <span>Latest News</span>
-                            </li>
-                            <li>
-                                <img src="img/icon3.jpg" alt="logo" />
-                                <span>Humor</span>
-                            </li>
-                            <li>
-                                <img src="img/icon4.jpg" alt="logo" />
-                                <span>Memes</span>
-                            </li>
-                            <li>
-                                <img src="img/icon5.jpg" alt="logo" />
-                                <span>Gaming</span>
-                            </li>
-                            <li>
-                                <img src="img/icon6.jpg" alt="logo" />
-                                <span>WTF</span>
-                            </li>
-                            <li>
-                                <img src="img/icon7.jpg" alt="logo" />
-                                <span>Relationship & Dating</span>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-                <div class="col-md-6 m-4" >
-                    <div class="card mb-3" style="background-color: #4b4b4b; border: none;" id="CreatePosts">
-                        <img src="https://imgflip.com/s/meme/Leonardo-Dicaprio-Cheers.jpg" class="card-img-top" alt="post">
-                        <div class="card-body">
-                          <h5 class="card-title text-white">Join the community by posting new meme</h5>
-                          <a href="#" class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#CreatePostModal">Create Post</a>
-                        </div>
-                    </div>
-                    <div id="postsContainer">
 
+                <!-- report section -->
+                <div class="reportContainer">
+                  <div class="row">
+                      <div class="col-md-12">
+                        <div>
+                          <div class="card mb-3 text-white" id="rpCont" style="background-color: #ca6b2c; margin: 50px 10px;">
+                            <div class="card-header text-center">
+                              <h3>Report</h3>
+                            </div>
+                              <form id="reportForm">
+                                  <div class="mb-3">
+                                    <label for="userId" class="form-label">Username:</label>
+                                    <textarea class="form-control" id="userId" name="userid" rows="1"></textarea>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="reportReason" class="form-label">Reason for report:</label>
+                                      <select class="form-select" id="reportReason" name="reason">
+                                          <option selected>Choose a reason</option>
+                                          <option value="1">Inappropriate content</option>
+                                          <option value="2">Spam or misleading</option>
+                                          <option value="3">Harassment or bullying</option>
+                                          <option value="4">Intellectual property violation</option>
+                                          <option value="5">Violence or dangerous organizations</option>
+                                          <option value="6">Sexually explicit content</option>
+                                          <option value="7">Hate speech or symbols</option>
+                                          <option value="8">Sale of illegal or regulated goods</option>
+                                          <option value="9">Other (please specify in details)</option>
+                                      </select>
+                                  </div>
+                                  <div class="mb-3">
+                                      <label for="reportDetails" class="form-label">Additional details:</label>
+                                      <textarea class="form-control" id="reportDetails" name="details" rows="3"></textarea>
+                                  </div>
+                                  <button type="submit" class="btn btn-warning">Submit Report</button>
+                              </form>
+                          </div>
+                      </div>
                     </div>
-                    <div>
-                      <!-- Login -->
-                      <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="loginToast" class="toast bg-black border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                          <div class="toast-header bg-black text-light ">
-                            <img src="img/logo.png" class="rounded me-2" alt="..." width="20" height="20">
-                            <strong class="me-auto ">MemesHub</strong>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                          </div>
-                          <div class="toast-body">
-                            Logged in successfully!
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Logout -->
-                      <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="logoutToast" class="toast bg-black border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                          <div class="toast-header bg-black text-light ">
-                            <img src="img/logo.png" class="rounded me-2" alt="..." width="20" height="20">
-                            <strong class="me-auto ">MemesHub</strong>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                          </div>
-                          <div class="toast-body">
-                            Logged out of account successfully!
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Create Post -->
-                      <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="createToast" class="toast bg-black border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                          <div class="toast-header bg-black text-light ">
-                            <img src="img/logo.png" class="rounded me-2" alt="..." width="20" height="20">
-                            <strong class="me-auto ">MemesHub</strong>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                          </div>
-                          <div class="toast-body">
-                            Post Created!
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Register -->
-                      <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="regToast" class="toast bg-black border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                          <div class="toast-header bg-black text-light ">
-                            <img src="img/logo.png" class="rounded me-2" alt="..." width="20" height="20">
-                            <strong class="me-auto ">MemesHub</strong>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                          </div>
-                          <div class="toast-body">
-                            Account registered successfully!
-                          </div>
-                        </div>
-                      </div>
-                     
-                      </div>         
-                    </div>
-              </div>                
+                  </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -280,7 +216,6 @@
                 </div>
             </div>
         </div>
-    </div>
     
     <!-- Login Confirmation Modal -->
     <div class="modal fade" id="LoginConfirmationModal" tabindex="-1" aria-labelledby="LoginConfirmationModalLabel" aria-hidden="true">
@@ -300,47 +235,42 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Edit post modal -->
-    <div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
-        <div class="modal-dialog text-center" style="background-color: #141414;  border-radius: 150px; color: orange;">
-          <div class="modal-content" style="background-color: #141414;">
-              <div class="pt-16 pb-32">
-                  <div class="container w-100 m-auto">
-                      <div class="mw-md mx-auto text-center">
-                          <h3 class="modal-title mb-4" id="editModalLabel">Edit Post</h3>
-                          <form id="editForm" data-bitwarden-watching="1">
-                              <div class="mb-3">
-                                  <label for="editTitle" class="form-label visually-hidden">Title</label>
-                                  <input type="text" class="form-control" id="editTitle" placeholder="Title">
-                              </div>
-                              <div class="mb-3">
-                                  <label for="editImageUrl" class="form-label visually-hidden">Image URL</label>
-                                  <input type="text" class="form-control" id="editImageUrl" placeholder="Image URL">
-                              </div>
-                              <div id="editWarningMessage" style="color: red;"></div>
-                              <button type="button" class="btn w-75 mb-8 btn-outline-warning shadow" id="saveChanges" style="border-radius: 50px;">Save Changes</button>
-                          </form>
-                      </div>
-                  </div>
-              </div>
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <div class="modal-body">
+            <form id="editProfileForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" required>
+                <div class="invalid-feedback">Please enter a valid username.</div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+          </div>
+        </div>
       </div>
     </div>
 
 
+
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="./js/report.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Initialize Bootstrap dropdown
-        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-            return new bootstrap.Dropdown(dropdownToggleEl);
-        });
-    </script>
 </body>
 </html>
