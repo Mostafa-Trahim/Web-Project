@@ -304,29 +304,29 @@ document.getElementById('loginBtn').addEventListener('click', function(e) {
 });
 
 // Shuffle posts
-document.getElementById('shuffleButton').addEventListener('click', function() {
-  shufflePosts();
-});
+// document.getElementById('shuffleButton').addEventListener('click', function() {
+//   shufflePosts();
+// });
 
-const shufflePosts = async () => {
-  try {
-    const response = await axios.get(`${BackendUrl}/posts`);
-    const posts = response.data;
-    const shuffledPosts = shuffleArray(posts);
-    displayFilteredPosts(shuffledPosts);
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-  }
-}
+// const shufflePosts = async () => {
+//   try {
+//     const response = await axios.get(`${BackendUrl}/posts`);
+//     const posts = response.data;
+//     const shuffledPosts = shuffleArray(posts);
+//     displayFilteredPosts(shuffledPosts);
+//   } catch (error) {
+//     console.error('Error fetching posts:', error);
+//   }
+// }
 
-const shuffleArray = (array) => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-}
+// const shuffleArray = (array) => {
+//   const shuffledArray = [...array];
+//   for (let i = shuffledArray.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+//   }
+//   return shuffledArray;
+// }
 
 
 // Add this function to show logged-in user information in the header
@@ -402,6 +402,62 @@ function getProfileInfo() {
   if (profileContainer) {
     if (user) {
       profileContainer.innerHTML = `
+      <div class="page-content page-container" id="page-content">
+      <div class="padding">
+          <div class="row container d-flex justify-content-center">
+  <div class="col-xl-12 col-md-12">
+                                                  <div class="card user-card-full">
+                                                      <div class="row m-l-0 m-r-0">
+                                                          <div class="col-sm-4 bg-c-lite-green user-profile">
+                                                              <div class="card-block text-center text-white">
+                                                                  <div class="m-b-25">
+                                                                      <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
+                                                                  </div>
+                                                                  <div id="userDetails"
+                                                                    <h6 class="f-w-600">User</h6>
+                                                                    <p>Web Designer</p>
+                                                                    <button id="editUserInfoButton"><i id="editIcon" class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="editUserInfo()"></i></button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div id="colsm8" class="col-sm-8">
+                                                              <div class="card-block">
+                                                                  <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                                                  <div class="row">
+                                                                      <div class="col-sm-6">
+                                                                          <p class="m-b-10 f-w-600">Username</p>
+                                                                          <h6 class="text-muted f-w-400">${user.username}</h6>
+                                                                      </div>
+                                                                      <div class="col-sm-6">
+                                                                          <p class="m-b-10 f-w-600">Email</p>
+                                                                          <h6 class="text-muted f-w-400">${user.email}</h6>
+                                                                      </div>
+                                                                  </div>
+                                                                  <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                                                  <div class="row">
+                                                                      <div class="col-sm-6">
+                                                                          <p class="m-b-10 f-w-600">Recent</p>
+                                                                          <h6 class="text-muted f-w-400">No Information</h6>
+                                                                      </div>
+                                                                      <div class="col-sm-6">
+                                                                          <p class="m-b-10 f-w-600">Most Viewed</p>
+                                                                          <h6 class="text-muted f-w-400">No Information</h6>
+                                                                      </div>
+                                                                  </div>
+                                                                  <ul class="social-link list-unstyled m-t-40 m-b-10">
+                                                                      <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
+                                                                      <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
+                                                                      <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
+                                                                  </ul>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                               </div>
+                                                  </div>
+                                              </div>
+
         <h1 class="text-center mb-4">Profile Information</h1>
         <div class="card text-white bg-dark mb-3" style="max-width: 540px;">
           <div class="row g-0">
@@ -410,7 +466,7 @@ function getProfileInfo() {
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">Username: ${user.username}</h5>
+                <h5 class="card-title">Username: </h5>
                 <p class="card-text">Email: ${user.email}</p>
                 <button class="btn btn-primary" id="editProfileBtn">Edit</button>
               </div>
@@ -418,6 +474,7 @@ function getProfileInfo() {
           </div>
         </div>
       `;
+      
       // Add event listener to the edit button
       const editProfileBtn = document.getElementById("editProfileBtn");
       if (editProfileBtn) {
@@ -426,10 +483,34 @@ function getProfileInfo() {
         console.error("Edit profile button not found.");
       }
     }
-  } else {
-    console.error("Profile container not found.");
   }
+
+    
+  
 }
+
+function editUserInfo() {
+  var userInfoDiv = document.getElementById("userDetails");
+  var editIcon = document.getElementById("editIcon");
+
+  // Toggle between displaying text and input fields
+  if (userInfoDiv.contentEditable === "true") {
+      userInfoDiv.contentEditable = "false";
+      editIcon.classList.remove("mdi-check");
+      editIcon.classList.add("mdi-square-edit-outline");
+      
+      // Save the edited content (this is where you would typically send the data to your backend)
+      var editedName = userInfoDiv.querySelector("h6").innerText;
+      var editedProfession = userInfoDiv.querySelector("p").innerText;
+      // Here you can do something with the editedName and editedProfession, like sending them to the server
+      
+  } else {
+      userInfoDiv.contentEditable = "true";
+      editIcon.classList.remove("mdi-square-edit-outline");
+      editIcon.classList.add("mdi-check");
+  } 
+}
+
 
 function editProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
