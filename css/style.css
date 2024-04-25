@@ -269,6 +269,7 @@
 .reportBtn {
     background-color: rgb(255, 184, 30); /* Blue background */
     border: none; /* Remove borders */
+    border-radius: 2px;
     color: white; /* White text */
     padding: 7px 12px; /* Some padding */
     font-size: 16px; /* Set a font size */

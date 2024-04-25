@@ -62,7 +62,6 @@
     margin: 0;
     padding: 0;
     background-color: black;
-    background-image: url("../img/logo1blur.png");
     color: white;
     height: 100vh;
 }
@@ -272,6 +271,7 @@
     background-color: rgb(255, 184, 30); /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
+    border-radius: 2px;
     padding: 7px 12px; /* Some padding */
     font-size: 16px; /* Set a font size */
     cursor: pointer; /* Mouse pointer on hover */
@@ -300,8 +300,6 @@
 
 body {
     background-color: #ebba33;
-    background-image: "./img/logo1.png";
-
 }
 
 .padding {
@@ -333,8 +331,8 @@ body {
 }
 
 .bg-c-lite-green {
-        background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
-    background: linear-gradient(to right, #ee5a6f, #f29263);
+        background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#eea15a));
+    background: linear-gradient(to right, #e7d852, #f29263);
 }
 
 .user-profile {

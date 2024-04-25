@@ -304,20 +304,20 @@ document.getElementById('loginBtn').addEventListener('click', function(e) {
 });
 
 // Shuffle posts
-document.getElementById('shuffleButton').addEventListener('click', function() {
-  shufflePosts();
-});
+// document.getElementById('shuffleButton').addEventListener('click', function() {
+//   shufflePosts();
+// });
 
-const shufflePosts = async () => {
-  try {
-    const response = await axios.get(`${BackendUrl}/posts`);
-    const posts = response.data;
-    const shuffledPosts = shuffleArray(posts);
-    displayFilteredPosts(shuffledPosts);
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-  }
-}
+// const shufflePosts = async () => {
+//   try {
+//     const response = await axios.get(`${BackendUrl}/posts`);
+//     const posts = response.data;
+//     const shuffledPosts = shuffleArray(posts);
+//     displayFilteredPosts(shuffledPosts);
+//   } catch (error) {
+//     console.error('Error fetching posts:', error);
+//   }
+// }
 
 const shuffleArray = (array) => {
   const shuffledArray = [...array];

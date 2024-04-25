@@ -414,7 +414,7 @@ function getProfileInfo() {
                                                                       <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
                                                                   </div>
                                                                   <div id="userDetails"
-                                                                    <h6 class="f-w-600">User</h6>
+                                                                    <h6 class="f-w-600">${user.username}</h6>
                                                                     <p>Web Designer</p>
                                                                     <button id="editUserInfoButton"><i id="editIcon" class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="editUserInfo()"></i></button>
                                                                   </div>
@@ -426,11 +426,11 @@ function getProfileInfo() {
                                                                   <div class="row">
                                                                       <div class="col-sm-6">
                                                                           <p class="m-b-10 f-w-600">Username</p>
-                                                                          <h6 class="text-muted f-w-400">${user.username}</h6>
+                                                                          <h6 id="userNameHead" class="text-muted f-w-400">${user.username}</h6>
                                                                       </div>
                                                                       <div class="col-sm-6">
                                                                           <p class="m-b-10 f-w-600">Email</p>
-                                                                          <h6 class="text-muted f-w-400">${user.email}</h6>
+                                                                          <h6 id="userEmail" class="text-muted f-w-400">${user.email}</h6>
                                                                       </div>
                                                                   </div>
                                                                   <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
@@ -476,12 +476,54 @@ function getProfileInfo() {
       `;
       
       // Add event listener to the edit button
-      const editProfileBtn = document.getElementById("editProfileBtn");
-      if (editProfileBtn) {
-        editProfileBtn.addEventListener("click", editProfile); // Ensure the function name is correct
-      } else {
-        console.error("Edit profile button not found.");
-      }
+      const editProfileBtn = document.getElementById("editUserInfoButton");
+      
+      editProfileBtn.addEventListener("click", function(e) {
+        e.preventDefault(); 
+                    
+          // Enable editing for name, username, and email
+          const userName = document.querySelector('.userNameHead');
+          const userEmail = document.querySelector('.userEmail');
+        
+          // Allow user to edit the username and email
+          userName.contentEditable = true;
+          userEmail.contentEditable = true;
+          userName.style.borderRadius = '0.3rem';
+          userName.style.border = '1px solid #D8D8D8'; 
+          userEmail.style.borderRadius = '0.3rem';
+          userEmail.style.border = '1px solid #D8D8D8'; 
+          
+        
+          // Add a save button to save the changes
+          const saveButton = document.createElement('button');
+          saveButton.textContent = 'Save';
+          saveButton.classList.add('btn', 'btn-primary', 'mt-2');
+          
+          saveButton.addEventListener('click', function() {
+            // Save the changes to the backend
+            const updateProfile = {
+              username: userName.textContent,
+              email: userEmail.textContent,
+            };
+        
+            // Make a PUT request to update the post
+            axios.put(`${BackendUrl}/users/${user.id}`, updatedPost)
+              .then((response) => {
+                // Handle success
+                console.log('Post updated successfully:', response.data);
+                // Optionally, disable editing mode after saving
+                userName.contentEditable = false;
+                userName.style.border = 'none';
+                userEmail.contentEditable = false;
+                userEmail.style.border = 'none';
+                titleElement.style.border = 'none';
+              })
+              .catch((error) => {
+                console.error('Error updating post:', error);
+              });
+          });
+          postElement.appendChild(saveButton);
+        });      
     }
   }
 
