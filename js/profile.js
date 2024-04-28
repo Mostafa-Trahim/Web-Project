@@ -497,6 +497,9 @@ function getProfileInfo() {
               .then((response) => {
                 // Handle success
                 console.log('Profile updated successfully:', response.data);
+                // Update user object in local storage
+                const updatedUser = { ...user, ...updateProfile };
+                localStorage.setItem('user', JSON.stringify(updatedUser));
                 // Optionally, disable editing mode after saving
                 userName.contentEditable = false;
                 userName.style.border = 'none';
