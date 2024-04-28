@@ -221,5 +221,20 @@ router.post('/:postId/downvote', async (req, res) => {
   }
 });
 
+// Get post count for a specific user
+router.get('/count', async (req, res) => {
+  const { userId } = req.query;
+
+  try {
+    const postCount = await pool.query('SELECT COUNT(*) FROM posts WHERE user_id = $1', [userId]);
+
+    res.status(200).json(postCount.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch post count' });
+  }
+}
+);
+
 
 module.exports = router;

@@ -413,15 +413,15 @@ function getProfileInfo() {
                                                                   <div class="m-b-25">
                                                                       <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
                                                                   </div>
-                                                                  <div id="userDetails"
+                                                                  <div>
                                                                     <h6 class="f-w-600">${user.username}</h6>
-                                                                    <p>Web Designer</p>
-                                                                    <button id="editUserInfoButton"><i id="editIcon" class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16" onclick="editUserInfo()"></i></button>
+                                                                    <p></p>
+                                                                    <button id="editUserInfoButton"><i id="editIcon" class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i></button>
                                                                   </div>
                                                               </div>
                                                           </div>
                                                           <div id="colsm8" class="col-sm-8">
-                                                              <div class="card-block">
+                                                              <div id="userDetails" class="card-block">
                                                                   <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
                                                                   <div class="row">
                                                                       <div class="col-sm-6">
@@ -433,14 +433,14 @@ function getProfileInfo() {
                                                                           <h6 id="userEmail" class="text-muted f-w-400">${user.email}</h6>
                                                                       </div>
                                                                   </div>
-                                                                  <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                                                  <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Activity</h6>
                                                                   <div class="row">
                                                                       <div class="col-sm-6">
-                                                                          <p class="m-b-10 f-w-600">Recent</p>
+                                                                          <p class="m-b-10 f-w-600">Posts</p>
                                                                           <h6 class="text-muted f-w-400">No Information</h6>
                                                                       </div>
                                                                       <div class="col-sm-6">
-                                                                          <p class="m-b-10 f-w-600">Most Viewed</p>
+                                                                          <p class="m-b-10 f-w-600">Likes</p>
                                                                           <h6 class="text-muted f-w-400">No Information</h6>
                                                                       </div>
                                                                   </div>
@@ -457,33 +457,18 @@ function getProfileInfo() {
                                                </div>
                                                   </div>
                                               </div>
-
-        <h1 class="text-center mb-4">Profile Information</h1>
-        <div class="card text-white bg-dark mb-3" style="max-width: 540px;">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img src="https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-profile-user-icon.png" class="img-fluid rounded-start" alt="User Profile Image">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">Username: </h5>
-                <p class="card-text">Email: ${user.email}</p>
-                <button class="btn btn-primary" id="editProfileBtn">Edit</button>
-              </div>
-            </div>
-          </div>
-        </div>
       `;
       
       // Add event listener to the edit button
       const editProfileBtn = document.getElementById("editUserInfoButton");
+      const saveButtonLocation = document.getElementById("userDetails");
       
       editProfileBtn.addEventListener("click", function(e) {
         e.preventDefault(); 
                     
           // Enable editing for name, username, and email
-          const userName = document.querySelector('.userNameHead');
-          const userEmail = document.querySelector('.userEmail');
+          const userName = document.getElementById('userNameHead');
+          const userEmail = document.getElementById('userEmail');
         
           // Allow user to edit the username and email
           userName.contentEditable = true;
@@ -498,106 +483,33 @@ function getProfileInfo() {
           const saveButton = document.createElement('button');
           saveButton.textContent = 'Save';
           saveButton.classList.add('btn', 'btn-primary', 'mt-2');
+          saveButton.id = 'saveProfileButton';
           
           saveButton.addEventListener('click', function() {
             // Save the changes to the backend
             const updateProfile = {
-              username: userName.textContent,
-              email: userEmail.textContent,
+              username: userName.textContent.trim(),
+              email: userEmail.textContent.trim(),
             };
         
             // Make a PUT request to update the post
-            axios.put(`${BackendUrl}/users/${user.id}`, updatedPost)
+            axios.put(`${BackendUrl}/users/${user.id}`, updateProfile)
               .then((response) => {
                 // Handle success
-                console.log('Post updated successfully:', response.data);
+                console.log('Profile updated successfully:', response.data);
                 // Optionally, disable editing mode after saving
                 userName.contentEditable = false;
                 userName.style.border = 'none';
                 userEmail.contentEditable = false;
                 userEmail.style.border = 'none';
-                titleElement.style.border = 'none';
+                saveButton.remove();
               })
               .catch((error) => {
                 console.error('Error updating post:', error);
               });
           });
-          postElement.appendChild(saveButton);
+          saveButtonLocation.appendChild(saveButton);
         });      
     }
-  }
-
-    
-  
-}
-
-function editUserInfo() {
-  var userInfoDiv = document.getElementById("userDetails");
-  var editIcon = document.getElementById("editIcon");
-
-  // Toggle between displaying text and input fields
-  if (userInfoDiv.contentEditable === "true") {
-      userInfoDiv.contentEditable = "false";
-      editIcon.classList.remove("mdi-check");
-      editIcon.classList.add("mdi-square-edit-outline");
-      
-      // Save the edited content (this is where you would typically send the data to your backend)
-      var editedName = userInfoDiv.querySelector("h6").innerText;
-      var editedProfession = userInfoDiv.querySelector("p").innerText;
-      // Here you can do something with the editedName and editedProfession, like sending them to the server
-      
-  } else {
-      userInfoDiv.contentEditable = "true";
-      editIcon.classList.remove("mdi-square-edit-outline");
-      editIcon.classList.add("mdi-check");
-  } 
-}
-
-
-function editProfile() {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const profileContainer = document.getElementById("profileContainer");
-  if (profileContainer) {
-    profileContainer.innerHTML = `
-      <h1 class="text-center mb-4">Edit Profile</h1>
-      <form id="editProfileForm">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" name="username" value="${user.username}" required>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" value="${user.email}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-      </form>
-    `;
-    const editProfileForm = document.getElementById("editProfileForm");
-    if (editProfileForm) {
-      editProfileForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        saveProfile(formData);
-      });
-    } else {
-      console.error("Edit profile form not found.");
-    }
-  } else {
-    console.error("Profile container not found.");
-  }
-  
-}
-
-function saveProfile(formData) {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const username = formData.get("username");
-  const email = formData.get("email");
-  if (username.trim() === "" || email.trim() === "") {
-    alert("Please fill all fields!");
-    return;
-  }
-  user.username = username;
-  user.email = email;
-  localStorage.setItem("user", JSON.stringify(user));
-  getProfileInfo();
+  }  
 }

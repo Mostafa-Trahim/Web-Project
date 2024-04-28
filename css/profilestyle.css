@@ -434,4 +434,19 @@ p {
     transition: all 0.3s ease-in-out;
 }
 
+#saveProfileButton {
+    background-color: #e7d52e;
+    border: none;
+    color: white;
+    padding: 7px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    width: auto;
+    height: 40px;
+    align-content: center;
+    margin-left: 500px;
+}
 
+#saveProfileButton:hover {
+    background-color: #ff4d4d;
+}
