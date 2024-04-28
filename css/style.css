@@ -296,8 +296,8 @@
     max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
-    background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
-    background: linear-gradient(to right, #ee5a6f, #f29263);    
+    background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#eea15a));
+    background: linear-gradient(to right, #f29263, #e7d852);  
 }
 
 #reportForm {
