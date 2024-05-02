@@ -306,7 +306,7 @@ function toggleCommentBox(commentBox) {
       user_id: userId
     })
     .then((response) => {
-      alert('Comment added successfully!');
+      // alert('Comment added successfully!');
       const comment = response.data;
       const commentBox = postElement.querySelector('.comment-box');
       const commentElement = createCommentElement(comment, user);
@@ -664,7 +664,7 @@ commentButton.addEventListener('click', () => {
       user_id: userId
     })
     .then((response) => {
-      alert('Comment added successfully!');
+      // alert('Comment added successfully!');
       const comment = response.data;
       const commentBox = postElement.querySelector('.comment-box');
       axios.get(`${BackendUrl}/comments/user/${userId}`)
